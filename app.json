@@ -1,12 +1,32 @@
 {
-  "pages":[
-    "pages/index/index",
-    "pages/logs/logs"
+  "pages": [
+    "pages/query/query",
+    "pages/vocabulary/vocabulary"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTitleText": "粤语小词典",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/query/query",
+        "iconPath": "images/icon_nav_search_bar.png",
+        "selectedIconPath": "images/icon_nav_search_bar.png",
+        "text": "查询"
+      },
+      {
+        "pagePath": "pages/vocabulary/vocabulary",
+        "iconPath": "images/icon_nav_cell.png",
+        "selectedIconPath": "images/icon_nav_cell.png",
+        "text": "词库"
+      }
+    ]
   }
 }

@@ -1,0 +1,3 @@
+<view wx:for="{{groups}}">
+  {{item.title}}
+</view>
