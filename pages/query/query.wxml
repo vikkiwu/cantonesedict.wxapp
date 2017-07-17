@@ -3,7 +3,7 @@
     <textarea placeholder="在这里输入...">{{input}}</textarea>
     <button type="primary" bindtap="query">查询</button>
   </form>
-  <view wx:for="{{results}}">
-    {{index}}: {{item.chntext}}
+  <view wx:for="{{results}}" style="padding:10rpx;">
+    {{item.chntext}}
   </view>
 </view>
