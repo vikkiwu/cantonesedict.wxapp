@@ -1,29 +1,28 @@
 // query.js
-
-var data = {
-  input: '',
-  results: [{ chntext: '未找到相关数据' }]
-}
 Page({
-
-  query: function () {
+  textarea1_input: function (e) {
+    this.setData({
+      inputLength: e.detail.value.length
+    })
+  },
+  form1_reset: function () {
+    this.setData({
+      input: '',
+      results: []
+    })
+  },
+  form1_submit: function (e) {
     var that = this
-    if (that.data.input || that.data.input.trim().length==0){
+    var input = e.detail.value.input;
+    if (!input || input.trim().length == 0) {
       that.setData({
-        results: [{ chntext: '请输入要查询的字词' }]
+        message: '请输入要查询的字词'
       })
       return
     }
     wx.request({
-      url: 'https://wx.uimoe.com',
+      url: 'https://wx.uimoe.com?code=CAN001&body={"input":"' + input + '"}',
       method: 'POST',
-      data: {
-        code: 'CAN001',
-        body: '{\"input\":\"' + that.data.input + '\"}'
-      },
-      header: {
-        'content-type': 'application/json'
-      },
       success: function (res) {
         console.log(res.data)
         var message = '系统繁忙，请稍后再试哦~'
@@ -32,20 +31,27 @@ Page({
         }
         if (res.data.error != 0) {
           that.setData({
-            results: [{ chntext: message }]
+            message: message
           })
           return
         }
-        var results = [];
+        var innerResponse = {};
         try {
-          results = JSON.parse(res.data.body)
+          innerResponse = JSON.parse(res.data.body)
         } catch (e) {
           console.log(res.data.body)
         }
 
-        console.log(results)
+        if (!innerResponse.results) {
+          message = '未找到相关数据'
+          that.setData({
+            message: message
+          })
+          return;
+        }
+
         that.setData({
-          results: results
+          results: innerResponse.results
         })
       }
     })
@@ -54,7 +60,12 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: data,
+  data: {
+    input: '',
+    inputLength: 0,
+    message: '',
+    results: []
+  },
 
   /**
    * 生命周期函数--监听页面加载

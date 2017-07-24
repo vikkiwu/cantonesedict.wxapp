@@ -1,9 +1,11 @@
 <view class="border">
-  <form>
-    <textarea placeholder="在这里输入...">{{input}}</textarea>
-    <button type="primary" bindtap="query">查询</button>
+  <form bindsubmit="form1_submit" bindreset="form1_reset">
+    <textarea name="input" bindinput="textarea1_input" placeholder="在这里输入..." maxlength="20"></textarea>
+    <view style="text-align:right;color:#808080;padding:5px;">{{inputLength}}/20</view>
+    <button type="primary" form-type="submit">查询</button>
   </form>
-  <view wx:for="{{results}}" style="padding:10rpx;">
-    {{item.chntext}}
+  <view style="padding:10px;">{{message}}</view>
+  <view wx:key="chntext" wx:for="{{results}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
+    {{item.chntext}}    {{item.canpronounce}}
   </view>
 </view>
