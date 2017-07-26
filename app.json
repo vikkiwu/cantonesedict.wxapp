@@ -1,7 +1,10 @@
 {
   "pages": [
     "pages/query/query",
-    "pages/vocabulary/vocabulary"
+    "pages/vocabulary/vocabulary",
+    "pages/categoryvocabulary/categoryvocabulary",
+    "pages/newupdates/newupdates",
+    "pages/hotquery/hotquery"
   ],
   "window": {
     "backgroundTextStyle": "light",

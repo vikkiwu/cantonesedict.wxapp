@@ -1,27 +1,20 @@
-// query.js
+// hotquery.js
 Page({
-  textarea1_input: function (e) {
-    this.setData({
-      inputLength: e.detail.value.length
-    })
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    items: []
   },
-  form1_reset: function () {
-    this.setData({
-      input: '',
-      results: []
-    })
-  },
-  form1_submit: function (e) {
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
     var that = this
-    var input = e.detail.value.input;
-    if (!input || input.trim().length == 0) {
-      that.setData({
-        message: '请输入要查询的字词'
-      })
-      return
-    }
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN001&body={"input":"' + input + '"}',
+      url: 'https://wx.uimoe.com/home/index?code=CAN006',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -30,9 +23,6 @@ Page({
           message = res.data.message
         }
         if (res.data.error != 0) {
-          that.setData({
-            message: message
-          })
           return
         }
         var innerResponse = {};
@@ -42,36 +32,15 @@ Page({
           console.log(res.data.body)
         }
 
-        if (!innerResponse.results) {
-          message = '未找到相关数据'
-          that.setData({
-            message: message
-          })
+        if (!innerResponse.items) {
           return;
         }
 
         that.setData({
-          results: innerResponse.results
+          items: innerResponse.items
         })
       }
     })
-  },
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    input: '',
-    inputLength: 0,
-    message: '',
-    results: []
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
   },
 
   /**

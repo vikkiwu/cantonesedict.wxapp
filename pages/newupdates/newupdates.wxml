@@ -1,0 +1,4 @@
+<!--newupdates.wxml-->
+<view wx:key="chntext" wx:for="{{items}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
+  {{item.chntext}} {{item.canpronounce}}
+</view>

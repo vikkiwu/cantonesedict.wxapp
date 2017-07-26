@@ -1,21 +1,52 @@
 // vocabulary.js
 Page({
+  itemtapped: function () {
 
+  },
   /**
    * 页面的初始数据
    */
   data: {
     groups: [
-      { title: "最近更新" },
-      { title: "查询最多" }
-    ]
+      { title: "最近更新", url: "/pages/newupdates/newupdates" },
+      { title: "查询最多", url: "/pages/hotquery/hotquery" }
+    ],
+    categories: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this
+    wx.request({
+      url: 'https://wx.uimoe.com/home/index?code=CAN003',
+      method: 'POST',
+      success: function (res) {
+        console.log(res.data)
+        var message = '系统繁忙，请稍后再试哦~'
+        if (res.data.message) {
+          message = res.data.message
+        }
+        if (res.data.error != 0) {
+          return
+        }
+        var innerResponse = {};
+        try {
+          innerResponse = JSON.parse(res.data.body)
+        } catch (e) {
+          console.log(res.data.body)
+        }
 
+        if (!innerResponse.items) {
+          return;
+        }
+
+        that.setData({
+          categories: innerResponse.items
+        })
+      }
+    })
   },
 
   /**
