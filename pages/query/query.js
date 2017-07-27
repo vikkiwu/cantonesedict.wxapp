@@ -1,32 +1,23 @@
 // query.js
+const backgroundAudioManager = wx.getBackgroundAudioManager()
 Page({
+  playvoicechanged: function (e) {
+    this.setData({
+      playvoice: e.detail.value
+    })
+  },
   play_voice: function (e) {
     console.log(e.currentTarget)
     var voiceurl = ''
-    if (this.data.continueplay === 'checked') {
-      for (var i = 0; i < this.data.results.length; i++) {
-        var item = this.data.results[i]
-        if (item.canvoice) {
-          voiceurl = item.canvoice;
-        } else {
-          voiceurl = 'https://wx.uimoe.com/assets/voice/' + item.canpronounce + '.wav'
-        }
-        wx.playBackgroundAudio({
-          dataUrl: voiceurl,
-          title: e.currentTarget.dataset.canpronounce + '.wav',
-        })
-      }
+    if (e.currentTarget.dataset.canvoice) {
+      voiceurl = e.currentTarget.dataset.canvoice
     } else {
-      if (e.currentTarget.dataset.canvoice) {
-        voiceurl = e.currentTarget.dataset.canvoice
-      } else {
-        voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
-      }
-      wx.playBackgroundAudio({
-        dataUrl: voiceurl,
-        title: e.currentTarget.dataset.canpronounce + '.wav',
-      })
+      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
     }
+    wx.playBackgroundAudio({
+      dataUrl: voiceurl,
+      title: e.currentTarget.dataset.canpronounce + '.wav',
+    })
   },
   textarea1_input: function (e) {
     this.setData({
@@ -59,7 +50,6 @@ Page({
         }
         if (res.data.error != 0) {
           that.setData({
-            showresult: 'none',
             message: message
           })
           return
@@ -74,17 +64,56 @@ Page({
         if (!innerResponse.results) {
           message = '未找到相关数据'
           that.setData({
-            showresult: 'none',
             message: message
           })
           return;
         }
 
+        wx.vibrateShort({})
         that.setData({
           message: '',
-          showresult: 'inline',
           results: innerResponse.results
         })
+
+        if (that.data.playvoice) {
+          var i = 0
+          var canplay = true
+          var timer1 = setInterval(function () {
+            if (i >= innerResponse.results.length) {
+              canplay = true
+              clearInterval(timer1)
+              return
+            }
+
+            if (!canplay) {
+              return
+            }
+
+            canplay = false
+            var item = innerResponse.results[i]
+            var voiceurl = ''
+            if (item.canvoice) {
+              voiceurl = item.canvoice
+            } else {
+              voiceurl = 'https://wx.uimoe.com/assets/voice/' + item.canpronounce + '.wav'
+            }
+
+            backgroundAudioManager.onError(function () {
+              console.log('e')
+              canplay = true
+              i += 1
+            })
+            backgroundAudioManager.onEnded(function () {
+              console.log('end')
+              canplay = true
+              i += 1
+            })
+            backgroundAudioManager.title = item.canpronounce + '.wav'
+            backgroundAudioManager.epname = 'vocabulary'
+            backgroundAudioManager.singer = '粤语小词典'
+            backgroundAudioManager.src = voiceurl
+          }, 100)
+        }
       }
     })
   },
@@ -97,8 +126,7 @@ Page({
     inputLength: 0,
     message: '',
     results: [],
-    showresult: 'none',
-    continueplay: 'checked'
+    playvoice: true
   },
 
   /**

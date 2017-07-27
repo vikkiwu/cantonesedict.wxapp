@@ -1,19 +1,21 @@
 <view class="border">
   <form bindsubmit="form1_submit" bindreset="form1_reset">
     <textarea name="input" bindinput="textarea1_input" placeholder="在这里输入..." maxlength="20"></textarea>
-    <view style="text-align:right;color:#808080;padding:5px;">{{inputLength}}/20</view>
+    <view style="padding:10px 0;">
+      <view style="float:left;color:#808080;">
+        <switch checked bindchange="playvoicechanged" />查询后播放发音
+      </view>
+      <view style="float:right;color:#808080;">{{inputLength}}/20</view>
+      <view style="clear:both;"></view>
+    </view>
     <button type="primary" form-type="submit">查询</button>
   </form>
   <view style="padding:10px;">{{message}}</view>
-  <view style="display:{{showresult}};">
-    <label style="padding:10px;">
-    <checkbox checked="{{continueplay}}" bindtap=""/>连续播放
-    </label>
-    <view style="height:10px;border-bottom:1px solid #e7e7e7;width:100%;">
+  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{results}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
+    <view style="float:left;">{{item.chntext}} {{item.canpronounce}}</view>
+    <view style="float:right;">
+      <image style="height:20px;width:20px;" src="/images/voice.png"></image>
     </view>
-  </view>
-  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{results}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
-    {{item.chntext}} {{item.canpronounce}}
-    <image style="height:20px;width:20px;" src="/images/voice.png"></image>
+    <view style="clear:both;"></view>
   </view>
 </view>
