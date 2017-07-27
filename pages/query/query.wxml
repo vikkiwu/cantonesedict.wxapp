@@ -5,8 +5,15 @@
     <button type="primary" form-type="submit">查询</button>
   </form>
   <view style="padding:10px;">{{message}}</view>
-  <view wx:key="chntext" wx:for="{{results}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
+  <view style="display:{{showresult}};">
+    <label style="padding:10px;">
+    <checkbox checked="{{continueplay}}" bindtap=""/>连续播放
+    </label>
+    <view style="height:10px;border-bottom:1px solid #e7e7e7;width:100%;">
+    </view>
+  </view>
+  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{results}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
     {{item.chntext}} {{item.canpronounce}}
-    <image data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" style="height:20px;width:20px;" src="/images/voice.png" bindtap="play_voice"></image>
+    <image style="height:20px;width:20px;" src="/images/voice.png"></image>
   </view>
 </view>

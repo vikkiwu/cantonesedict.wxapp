@@ -3,15 +3,30 @@ Page({
   play_voice: function (e) {
     console.log(e.currentTarget)
     var voiceurl = ''
-    if (e.currentTarget.dataset.canvoice) {
-      voiceurl = e.currentTarget.dataset.canvoice
+    if (this.data.continueplay === 'checked') {
+      for (var i = 0; i < this.data.results.length; i++) {
+        var item = this.data.results[i]
+        if (item.canvoice) {
+          voiceurl = item.canvoice;
+        } else {
+          voiceurl = 'https://wx.uimoe.com/assets/voice/' + item.canpronounce + '.wav'
+        }
+        wx.playBackgroundAudio({
+          dataUrl: voiceurl,
+          title: e.currentTarget.dataset.canpronounce + '.wav',
+        })
+      }
     } else {
-      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+      if (e.currentTarget.dataset.canvoice) {
+        voiceurl = e.currentTarget.dataset.canvoice
+      } else {
+        voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+      }
+      wx.playBackgroundAudio({
+        dataUrl: voiceurl,
+        title: e.currentTarget.dataset.canpronounce + '.wav',
+      })
     }
-    wx.playBackgroundAudio({
-      dataUrl: voiceurl,
-      title: e.currentTarget.dataset.canpronounce + '.wav',
-    })
   },
   textarea1_input: function (e) {
     this.setData({
@@ -44,6 +59,7 @@ Page({
         }
         if (res.data.error != 0) {
           that.setData({
+            showresult: 'none',
             message: message
           })
           return
@@ -58,13 +74,15 @@ Page({
         if (!innerResponse.results) {
           message = '未找到相关数据'
           that.setData({
+            showresult: 'none',
             message: message
           })
           return;
         }
 
         that.setData({
-          message: "",
+          message: '',
+          showresult: 'inline',
           results: innerResponse.results
         })
       }
@@ -78,7 +96,9 @@ Page({
     input: '',
     inputLength: 0,
     message: '',
-    results: []
+    results: [],
+    showresult: 'none',
+    continueplay: 'checked'
   },
 
   /**
