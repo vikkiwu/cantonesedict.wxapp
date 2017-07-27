@@ -1,5 +1,18 @@
 // query.js
 Page({
+  play_voice: function (e) {
+    console.log(e.currentTarget)
+    var voiceurl = ''
+    if (e.currentTarget.dataset.canvoice) {
+      voiceurl = e.currentTarget.dataset.canvoice
+    } else {
+      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+    }
+    wx.playBackgroundAudio({
+      dataUrl: voiceurl,
+      title: e.currentTarget.dataset.canpronounce + '.wav',
+    })
+  },
   textarea1_input: function (e) {
     this.setData({
       inputLength: e.detail.value.length
@@ -51,6 +64,7 @@ Page({
         }
 
         that.setData({
+          message: "",
           results: innerResponse.results
         })
       }

@@ -6,6 +6,7 @@
   </form>
   <view style="padding:10px;">{{message}}</view>
   <view wx:key="chntext" wx:for="{{results}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
-    {{item.chntext}}    {{item.canpronounce}}
+    {{item.chntext}} {{item.canpronounce}}
+    <image data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" style="height:20px;width:20px;" src="/images/voice.png" bindtap="play_voice"></image>
   </view>
 </view>

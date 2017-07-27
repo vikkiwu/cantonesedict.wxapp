@@ -2,7 +2,7 @@
 <view wx:key="name" wx:for="{{items}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
   <view>
     <view style="float:left;">{{item.name}}</view>
-    <view style="float:right;">{{item.count}}</view>
+    <view style="float:right;">{{item.count}}次</view>
     <view style="clear:both;"></view>
   </view>
 </view>
