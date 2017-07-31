@@ -1,1 +1,4 @@
 /**app.wxss**/
+.border{
+  padding: 20rpx;
+}

@@ -1,4 +1,9 @@
 <!--newupdates.wxml-->
-<view wx:key="chntext" wx:for="{{items}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
-  {{item.chntext}} {{item.canpronounce}}
+<view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
+  <view style="float:left;">{{item.chntext}} {{item.canpronounce}}</view>
+  <view style="float:right;">
+    <image style="height:20px;width:20px;" src="/images/voice.png"></image>
+  </view>
+  <view style="clear:both;"></view>
 </view>
+<button type="primary" style="position:fixed;bottom:0;width:100%;" bindtap="form1_submit">换一批</button>
