@@ -1,12 +1,5 @@
-<view wx:key="title" wx:for="{{groups}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
-  <navigator url="{{item.url}}">
-    <view style="float:left;">{{item.title}}</view>
-    <view style="float:right;">></view>
-    <view style="clear:both;"></view>
-  </navigator>
-</view>
 <view wx:key="name" wx:for="{{categories}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
-  <navigator url="/pages/categoryvocabulary/categoryvocabulary?id={{item.id}}" bindtap="itemtapped">
+  <navigator url="/pages/categoryvocabulary/categoryvocabulary?id={{item.id}}">
     <view style="float:left;">{{item.name}}</view>
     <view style="float:right;">{{item.count}}></view>
     <view style="clear:both;"></view>

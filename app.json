@@ -4,7 +4,10 @@
     "pages/vocabulary/vocabulary",
     "pages/categoryvocabulary/categoryvocabulary",
     "pages/newupdates/newupdates",
-    "pages/hotquery/hotquery"
+    "pages/hotquery/hotquery",
+    "pages/discovery/discovery",
+    "pages/me/me",
+    "pages/feedback/feedback"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,7 +31,19 @@
         "pagePath": "pages/vocabulary/vocabulary",
         "iconPath": "images/icon_nav_cell.png",
         "selectedIconPath": "images/icon_nav_cell.png",
-        "text": "词库"
+        "text": "学习"
+      },
+      {
+        "pagePath": "pages/discovery/discovery",
+        "iconPath": "images/safari.png",
+        "selectedIconPath": "images/safari.png",
+        "text": "发现"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "iconPath": "images/me.png",
+        "selectedIconPath": "images/me.png",
+        "text": "我的"
       }
     ]
   }
