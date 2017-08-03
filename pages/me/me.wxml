@@ -1,8 +1,17 @@
 <!--me.wxml-->
 <view class="border">
   <block wx:if="{{!hasUserInfo && canIUse}}">
-    <text>登录后可以查看我的反馈</text>
-    <button type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 使用微信登录 </button>
+    <view style="border-bottom:1px solid #e7e7e7;border-top:1px solid #e7e7e7;background-color:#f8f8f8;padding:5px;">
+      <view style="float:left;">
+        <image src="/images/me.png" style="height:64px;width:64px;"></image>
+      </view>
+      <view style="float:left;">
+        <view style="margin-left:5px;height:30px;line-height:30px;">未登录</view>
+        <view style="margin-left:5px;">登录后查看我的反馈</view>
+      </view>
+      <view style="clear:left;"></view>
+    </view>
+    <button style="margin:5px;" type="primary" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 使用微信登录 </button>
   </block>
   <block wx:else>
     <view style="border-bottom:1px solid #e7e7e7;border-top:1px solid #e7e7e7;background-color:#f8f8f8;padding:5px;">

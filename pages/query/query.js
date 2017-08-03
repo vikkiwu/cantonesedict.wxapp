@@ -1,6 +1,25 @@
 // query.js
 const backgroundAudioManager = wx.getBackgroundAudioManager()
 Page({
+  message_tapped: function (e) {
+    var input = this.data.input
+    if (!input) {
+      return
+    }
+
+    wx.request({
+      url: 'https://wx.uimoe.com/home/index?code=CAN002&body={"opttype":0,"chntext":"' + input + '"}',
+      method: 'POST',
+      success: function (res) {
+        console.log(res.data)
+        wx.showToast({
+          title: '感谢您的反馈',
+          icon: 'success',
+          duration: 1000
+        })
+      }
+    })
+  },
   playvoicechanged: function (e) {
     this.setData({
       playvoice: e.detail.value
@@ -39,18 +58,20 @@ Page({
       })
       return
     }
+
+    that.setData({
+      input: input
+    })
     wx.request({
       url: 'https://wx.uimoe.com/home/index?code=CAN001&body={"input":"' + input + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
-        var message = '系统繁忙，请稍后再试哦~'
-        if (res.data.message) {
-          message = res.data.message
-        }
+        var message = '未找到相关数据，点击文字反馈给我哦~'
         if (res.data.error != 0) {
           that.setData({
-            message: message
+            message: message,         
+            results: []
           })
           return
         }
@@ -62,9 +83,9 @@ Page({
         }
 
         if (!innerResponse.results) {
-          message = '未找到相关数据'
           that.setData({
-            message: message
+            message: message,
+            results: []
           })
           return;
         }
