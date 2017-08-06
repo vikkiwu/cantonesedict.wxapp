@@ -7,7 +7,10 @@
     "pages/hotquery/hotquery",
     "pages/discovery/discovery",
     "pages/me/me",
-    "pages/feedback/feedback"
+    "pages/feedback/feedback",
+    "pages/learning/learning",
+    "pages/login/login",
+    "pages/register/register"
   ],
   "window": {
     "backgroundTextStyle": "light",
