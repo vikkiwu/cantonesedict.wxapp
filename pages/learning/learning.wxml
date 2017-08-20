@@ -1,2 +1,9 @@
 <!--learning.wxml-->
-<text>learning.wxml</text>
+<view style="text-align:center;">选择词库</view>
+<view style="text-align:center;">今天还要</view>
+<view style="text-align:center;height:100px;line-height:100px;">学习：<text style="font-size:48px;">0</text>个|复习：<text style="font-size:48px;">0</text>个</view>
+<view style="flex-direction:row;display:flex;justify-content:center;">
+  <view style="text-align:center;flex:1;border-right:1px solid #e7e7e7;">已完成0个</view>
+  <view style="text-align:center;flex:1;border-right:1px solid #e7e7e7;">剩余0个</view>
+  <view style="text-align:center;flex:1;">剩余0天</view>
+</view>

@@ -1,4 +1,5 @@
 <!--newupdates.wxml-->
+<view style="height:10px;border-bottom:1px solid #e7e7e7;" ></view>
 <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
   <view style="float:left;">{{item.chntext}} {{item.canpronounce}}</view>
   <view style="float:right;">

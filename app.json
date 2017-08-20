@@ -31,7 +31,7 @@
         "text": "查询"
       },
       {
-        "pagePath": "pages/vocabulary/vocabulary",
+        "pagePath": "pages/learning/learning",
         "iconPath": "images/icon_nav_cell.png",
         "selectedIconPath": "images/icon_nav_cell.png",
         "text": "学习"

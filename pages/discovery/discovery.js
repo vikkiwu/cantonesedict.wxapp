@@ -5,9 +5,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    groups: [
+    groups1: [
       { title: "最近更新", url: "/pages/newupdates/newupdates" },
       { title: "查询最多", url: "/pages/hotquery/hotquery" }
+    ],
+    groups2: [
+      { title: "声母", url: "/pages/newupdates/newupdates" },
+      { title: "韵母", url: "/pages/hotquery/hotquery" },
+      { title: "声调", url: "/pages/hotquery/hotquery" }
     ]
   },
 
