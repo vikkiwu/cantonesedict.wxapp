@@ -3,11 +3,78 @@
 const app = getApp()
 
 Page({
+  username_inputed: function (e) {
+    this.setData({
+      message: '',
+      usernameerror: ''
+    })
+  },
+  userpass_inputed: function (e) {
+    this.setData({
+      message: '',
+      userpasserror: ''
+    })
+  },
+  form1_submit: function (e) {
+    var that = this
+    var username = e.detail.value.username;
+    var userpass = e.detail.value.userpass;
+    var valid = true
+    if (!username || username.trim().length == 0) {
+      valid = false
+      that.setData({
+        usernameerror: '账号不能为空'
+      })
+    }
 
+    if (!userpass || userpass.trim().length == 0) {
+      valid = false
+      that.setData({
+        userpasserror: '密码不能为空'
+      })
+    }
+
+    if (!valid) {
+      return
+    }
+
+    wx.request({
+      url: 'https://wx.uimoe.com/home/index?code=CAN014&body={"username":"' + username + '","userpass":"' + userpass + '"}',
+      method: 'POST',
+      success: function (res) {
+        console.log(res.data)
+        var message = '系统繁忙，请稍后再试'
+        if (res.data.message) {
+          message = res.data.message
+        }
+
+        if (res.data.error != 0) {
+          that.setData({
+            message: message
+          })
+          return
+        }
+
+        that.setData({
+          hasUserInfo: true,
+          userInfo: {
+            nickName: username
+          }
+        })
+
+        app.globalData.userInfo = {
+          nickName: username
+        }
+      }
+    })
+  },
   /**
    * 页面的初始数据
    */
   data: {
+    usernameerror: '',
+    userpasserror: '',
+    message: '',
     userInfo: {},
     hasUserInfo: false
   },

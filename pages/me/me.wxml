@@ -1,18 +1,14 @@
 <!--me.wxml-->
 <view class="border">
   <block wx:if="{{!hasUserInfo}}">
-    <navigator url="/pages/login/login">
-      <view style="border-bottom:1px solid #e7e7e7;border-top:1px solid #e7e7e7;background-color:#f8f8f8;padding:5px;">
-        <view style="float:left;">
-          <image src="/images/me.png" style="height:64px;width:64px;"></image>
-        </view>
-        <view style="float:left;">
-          <view style="margin-left:5px;height:30px;line-height:30px;">未登录</view>
-          <view style="margin-left:5px;">点此处登录</view>
-        </view>
-        <view style="clear:left;"></view>
-      </view>
-    </navigator>
+    <form bindsubmit="form1_submit" bindreset="form1_reset">
+      <text style="margin-bottom:5px;">账号 </text><text style="margin-bottom:5px;color:#ff8080;">{{usernameerror}}</text>
+      <input name="username" type="text" bindinput="username_inputed" style="border-bottom:1px solid #e7e7e7;margin-bottom:5px;" />
+      <text style="margin-bottom:5px;">密码 </text><text style="margin-bottom:5px;color:#ff8080;">{{userpasserror}}</text>
+      <input name="userpass" type="password" bindinput="userpass_inputed" style="border-bottom:1px solid #e7e7e7;margin-bottom:5px;" />
+      <button type="primary" form-type="submit" style="margin-bottom:5px;">登录</button>
+      <text style="margin-bottom:5px;color:#ff8080;">{{message}}</text>
+    </form>
   </block>
   <block wx:else>
     <view style="border-bottom:1px solid #e7e7e7;border-top:1px solid #e7e7e7;background-color:#f8f8f8;padding:5px;">
@@ -31,7 +27,7 @@
       <view style="clear:both;"></view>
     </navigator>
     <navigator style="padding:10px;border-bottom:1px solid #e7e7e7;border-top:1px solid #e7e7e7;" url="/pages/learning/learning">
-      <view style="float:left;">我的学习</view>
+      <view style="float:left;">我的生词</view>
       <view style="float:right;">></view>
       <view style="clear:both;"></view>
     </navigator>
