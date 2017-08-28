@@ -10,12 +10,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    learning: {
-      categoryid: 0,
-      todaycompleted: 0,
-      completed: 0,
-      remins: 0,
-      total: 0
-    }
+    learning: null
   }
 })

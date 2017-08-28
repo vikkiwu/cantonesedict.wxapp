@@ -14,7 +14,8 @@
     "pages/initials/initials",
     "pages/tones/tones",
     "pages/finals/finals",
-    "pages/mynewwords/mynewwords"
+    "pages/mynewwords/mynewwords",
+    "pages/choosecategory/choosecategory"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,14 +1,16 @@
-<view style="background-color:#22b14c;color:#fff;">
+<view style="background-color:#22b14c;color:#fff;position:fixed;top:0;width:100%;">
   <view style="padding:10px;">
-  粤语没有j,q,x,zh,ch,sh
+    粤语没有j,q,x,zh,ch,sh
   </view>
 </view>
-<view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
-  <view style="float:left;">
-    {{item.chntext}} 例：{{item.cantext}} {{item.description}}
+<view style="margin-top:48px;">
+  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
+    <view style="float:left;">
+      {{item.chntext}} 例：{{item.cantext}} {{item.description}}
+    </view>
+    <view style="float:right;">
+      <image style="height:20px;width:20px;" src="/images/voice.png"></image>
+    </view>
+    <view style="clear:both;"></view>
   </view>
-  <view style="float:right;">
-    <image style="height:20px;width:20px;" src="/images/voice.png"></image>
-  </view>
-  <view style="clear:both;"></view>
 </view>

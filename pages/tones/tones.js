@@ -20,6 +20,9 @@ Page({
     if (e.currentTarget.dataset.canvoice) {
       voiceurl = e.currentTarget.dataset.canvoice
     } else {
+      if (!e.currentTarget.dataset.canpronounce) {
+        return
+      }
       voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
     }
     wx.playBackgroundAudio({
