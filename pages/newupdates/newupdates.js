@@ -27,6 +27,7 @@ Page({
       url: 'https://wx.uimoe.com/home/index?code=CAN005&body={"page":' + that.data.page + ',"pagesize":10}',
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         console.log(res.data)
         var message = '系统繁忙，请稍后再试哦~'
         if (res.data.message) {
@@ -55,6 +56,9 @@ Page({
           page: newpage,
           items: innerResponse.items
         })
+      },
+      fail: function () {
+        wx.hideLoading()
       }
     })
   },
@@ -68,6 +72,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: '最近更新'
+    })
+    wx.showLoading({
+      title: '加载中...'
+    })
     this.loaddata()
   },
 

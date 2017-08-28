@@ -10,11 +10,11 @@
     </view>
     <button type="primary" form-type="submit">查询</button>
   </form>
-  <view style="padding:10px;" bindtap="message_tapped">{{message}}</view>
-  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{results}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
+  <view style="margin-top:5px;margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;color:#808080;background-color:#f8f8f8;">{{message}}</view>
+  <view data-chntext="{{item.chntext}}" data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindlongtap="show_actions" wx:key="chntext" wx:for="{{results}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
     <view style="float:left;">{{item.chntext}} {{item.canpronounce}}</view>
     <view style="float:right;">
-      <image style="height:20px;width:20px;" src="/images/voice.png"></image>
+      <image data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" style="height:20px;width:20px;" src="/images/voice.png"></image>
     </view>
     <view style="clear:both;"></view>
   </view>

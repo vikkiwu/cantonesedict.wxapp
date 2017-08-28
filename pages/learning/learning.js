@@ -1,9 +1,17 @@
 // learning.js
+//获取应用实例
+const app = getApp()
+
 var data = {
   todaycompleted: 0,
   completed: 0,
   remains: 0,
-  total: 0
+  total: 0,
+  groups: [
+    { title: "声母", url: "/pages/initials/initials", description: "19" },
+    { title: "韵母", url: "/pages/finals/finals", description: "56" },
+    { title: "声调", url: "/pages/tones/tones", description: "9" }
+  ]
 }
 Page({
 
@@ -16,7 +24,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if (!app.globalData.learning) {
+      app.globalData.learning = {}
+    }
+    data.todaycompleted = app.globalData.learning.todaycompleted || 0
+    data.completed = app.globalData.learning.completed || 0
+    data.remains = app.globalData.learning.remains || 0
+    data.total = app.globalData.learning.total || 0
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#22b14c',
+    })
   },
 
   /**

@@ -1,19 +1,23 @@
 // me.js
 //获取应用实例
 const app = getApp()
-
+var data = {
+  usernameerror: '',
+  userpasserror: '',
+  message: '',
+  hasUserInfo: false,
+  userInfo: {}
+}
 Page({
   username_inputed: function (e) {
-    this.setData({
-      message: '',
-      usernameerror: ''
-    })
+    data.message = ""
+    data.usernameerror = ""
+    this.setData(data)
   },
   userpass_inputed: function (e) {
-    this.setData({
-      message: '',
-      userpasserror: ''
-    })
+    data.message = ""
+    data.userpasserror = ""
+    this.setData(data)
   },
   form1_submit: function (e) {
     var that = this
@@ -22,19 +26,16 @@ Page({
     var valid = true
     if (!username || username.trim().length == 0) {
       valid = false
-      that.setData({
-        usernameerror: '账号不能为空'
-      })
+      data.usernameerror = "账号不能为空"
     }
 
     if (!userpass || userpass.trim().length == 0) {
       valid = false
-      that.setData({
-        userpasserror: '密码不能为空'
-      })
+      data.userpasserror = '密码不能为空'
     }
 
     if (!valid) {
+      that.setData(data)
       return
     }
 
@@ -49,44 +50,35 @@ Page({
         }
 
         if (res.data.error != 0) {
-          that.setData({
-            message: message
-          })
+          data.message = message
+          that.setData(data)
           return
         }
 
-        that.setData({
-          hasUserInfo: true,
-          userInfo: {
-            nickName: username
-          }
-        })
-
+        data.hasUserInfo = true
+        data.userInfo = {
+          nickName: username
+        }
         app.globalData.userInfo = {
           nickName: username
         }
+        that.setData(data)
       }
     })
   },
   /**
    * 页面的初始数据
    */
-  data: {
-    usernameerror: '',
-    userpasserror: '',
-    message: '',
-    userInfo: {},
-    hasUserInfo: false
-  },
+  data: data,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     if (app.globalData.userInfo && app.globalData.userInfo.nickName) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
+      data.hasUserInfo = true
+      data.userInfo = {
+        nickName: username
+      }
     }
   },
 

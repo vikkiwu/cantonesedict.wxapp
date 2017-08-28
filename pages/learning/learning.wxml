@@ -8,3 +8,19 @@
   <view style="text-align:center;flex:1;border-right:1px solid #e7e7e7;padding:10px;">剩余{{remains}}个</view>
   <view style="text-align:center;flex:1;padding:10px;">一共{{total}}个</view>
 </view>
+<view style="text-align:center;padding:10px;background-color:#e7e7e7;border-bottom:1px solid #e7e7e7;">基础</view>
+<view wx:key="title" wx:for="{{groups}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
+  <navigator url="{{item.url}}">
+    <view style="float:left;">{{item.title}}</view>
+    <view style="float:right;">{{item.description}}></view>
+    <view style="clear:both;"></view>
+  </navigator>
+</view>
+<view style="text-align:center;padding:10px;background-color:#e7e7e7;border-bottom:1px solid #e7e7e7;">进阶</view>
+<view style="padding:10px;border-bottom:1px solid #e7e7e7;">
+  <navigator url="/pages/vocabulary/vocabulary">
+    <view style="float:left;">情景分类</view>
+    <view style="float:right;">></view>
+    <view style="clear:both;"></view>
+  </navigator>
+</view>

@@ -10,7 +10,11 @@
     "pages/feedback/feedback",
     "pages/learning/learning",
     "pages/login/login",
-    "pages/register/register"
+    "pages/register/register",
+    "pages/initials/initials",
+    "pages/tones/tones",
+    "pages/finals/finals",
+    "pages/mynewwords/mynewwords"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,9 +1,26 @@
-// vocabulary.js
+const app = getApp()
+var data = {
+  page: 1,
+  userid: 0
+}
 Page({
+  play_voice: function (e) {
+    console.log(e.currentTarget)
+    var voiceurl = ''
+    if (e.currentTarget.dataset.canvoice) {
+      voiceurl = e.currentTarget.dataset.canvoice
+    } else {
+      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+    }
+    wx.playBackgroundAudio({
+      dataUrl: voiceurl,
+      title: e.currentTarget.dataset.canpronounce + '.wav',
+    })
+  },
   loaddata: function () {
     var that = this
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN003&body={"page":1,"pagesize":10}',
+      url: 'https://wx.uimoe.com/home/index?code=CAN004&body={"page":' + that.data.page + ',"pagesize":20,"id":' + that.data.vocabularyid + '}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -12,6 +29,11 @@ Page({
           message = res.data.message
         }
         if (res.data.error != 0) {
+          wx.showToast({
+            title: '没有更多了...',
+            icon: 'success',
+            duration: 1000
+          })
           return
         }
         var innerResponse = {};
@@ -25,8 +47,10 @@ Page({
           return;
         }
 
+        var newpage = that.data.page + 1
         that.setData({
-          categories: innerResponse.items
+          page: newpage,
+          items: innerResponse.items
         })
       }
     })
@@ -34,17 +58,12 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    categories: []
-  },
-
+  data: data,
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarTitle({
-      title: '情景分类'
-    })
+    data.userid = app.globalData.userInfo.userid
     this.loaddata()
   },
 

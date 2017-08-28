@@ -6,12 +6,16 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    var userInfo = wx.getStorageSync('userInfo') || null
-    if (userInfo) {
-      this.globalData.userInfo = userInfo
-    }
+    this.globalData = wx.getStorageSync('globalData') || {}
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    learning: {
+      categoryid: 0,
+      todaycompleted: 0,
+      completed: 0,
+      remins: 0,
+      total: 0
+    }
   }
 })

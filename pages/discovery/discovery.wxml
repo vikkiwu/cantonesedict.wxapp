@@ -1,22 +1,6 @@
 <!--discovery.wxml-->
 <view style="height:10px;border-bottom:1px solid #e7e7e7;" ></view>
-<view wx:key="title" wx:for="{{groups1}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
-  <navigator url="{{item.url}}">
-    <view style="float:left;">{{item.title}}</view>
-    <view style="float:right;">></view>
-    <view style="clear:both;"></view>
-  </navigator>
-</view>
-<view style="height:10px;border-bottom:1px solid #e7e7e7;" ></view>
-<view style="padding:10px;border-bottom:1px solid #e7e7e7;">
-  <navigator url="/pages/vocabulary/vocabulary">
-    <view style="float:left;">情景分类</view>
-    <view style="float:right;">></view>
-    <view style="clear:both;"></view>
-  </navigator>
-</view>
-<view style="height:10px;border-bottom:1px solid #e7e7e7;" ></view>
-<view wx:key="title" wx:for="{{groups2}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
+<view wx:key="title" wx:for="{{groups}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
   <navigator url="{{item.url}}">
     <view style="float:left;">{{item.title}}</view>
     <view style="float:right;">></view>

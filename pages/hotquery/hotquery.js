@@ -1,22 +1,12 @@
 // hotquery.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    items: []
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  loaddata: function () {
     var that = this
     wx.request({
       url: 'https://wx.uimoe.com/home/index?code=CAN006&body={"page":1,"pagesize":10}',
       method: 'POST',
       success: function (res) {
+        wx.hideLoading()
         console.log(res.data)
         var message = '系统繁忙，请稍后再试哦~'
         if (res.data.message) {
@@ -39,8 +29,30 @@ Page({
         that.setData({
           items: innerResponse.items
         })
+      },
+      fail: function () {
+        wx.hideLoading()
       }
     })
+  },
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    items: []
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: '查询最多'
+    })
+    wx.showLoading({
+      title: '加载中...'
+    })
+    this.loaddata()
   },
 
   /**
