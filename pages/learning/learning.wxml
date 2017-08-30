@@ -1,8 +1,15 @@
-<!--learning.wxml-->
-<view style="background-color:#22b14c;color:#fff;">
-  <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;">今天已学</navigator>
-  <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;"><text style="font-size:48px;">{{todaycompleted}}</text>个</navigator>
-</view>
+<block wx:if="{{!hasUserInfo}}">
+  <view style="background-color:#22b14c;color:#fff;">
+    <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;">选择要学习的词库</navigator>
+    <navigator url="/pages/choosevocabulary/choosevocabulary?categoryid={{categoryid}}&userid={{}}" style="text-align:center;padding:10px;"><text style="font-size:48px;">{{todaycompleted}}</text>个</navigator>
+  </view>
+</block>
+<block wx:else>
+  <view style="background-color:#22b14c;color:#fff;">
+    <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;">{{categoryname}}今天已学</navigator>
+    <navigator url="/pages/choosevocabulary/choosevocabulary?categoryid={{categoryid}}&userid={{userid}}" style="text-align:center;padding:10px;"><text style="font-size:48px;">{{todaycompleted}}</text>个</navigator>
+  </view>
+</block>
 <view style="flex-direction:row;display:flex;justify-content:center;">
   <view style="text-align:center;flex:1;border-right:1px solid #e7e7e7;padding:10px;">已学{{completed}}个</view>
   <view style="text-align:center;flex:1;border-right:1px solid #e7e7e7;padding:10px;">剩余{{remains}}个</view>

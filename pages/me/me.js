@@ -55,14 +55,32 @@ Page({
           return
         }
 
+        var innerResponse = {}
+        try {
+          innerResponse = JSON.parse(res.data.body)
+        } catch (e) {
+          console.log(res.data.body)
+        }
+
+        if (!innerResponse.username) {
+          data.message = message
+          that.setData(data)
+          return
+        }
+
         data.hasUserInfo = true
         data.userInfo = {
-          nickName: username
+          nickName: innerResponse.username,
+          username: innerResponse.username,
+          userid: innerResponse.userid
         }
         app.globalData.userInfo = {
-          nickName: username
+          nickName: innerResponse.username,
+          username: innerResponse.username,
+          userid: innerResponse.userid
         }
         that.setData(data)
+        wx.setStorageSync('globalData', app.globalData)
       }
     })
   },
@@ -74,10 +92,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (app.globalData.userInfo && app.globalData.userInfo.nickName) {
+    if (app.globalData.userInfo && app.globalData.userInfo) {
       data.hasUserInfo = true
       data.userInfo = {
-        nickName: username
+        nickName: app.globalData.userInfo.nickName,
+        username: app.globalData.userInfo.username,
+        userid: app.globalData.userInfo.userid
       }
     }
   },

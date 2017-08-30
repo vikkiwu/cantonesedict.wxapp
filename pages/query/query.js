@@ -14,7 +14,7 @@ Page({
         icon: 'success',
         duration: 1000
       })
-      return;
+      return
     }
 
     wx.request({
@@ -42,11 +42,11 @@ Page({
         icon: 'success',
         duration: 1000
       })
-      return;
+      return
     }
 
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN002&body={"opttype":0,"chntext":"' + input + '"}',
+      url: 'https://wx.uimoe.com/home/index?code=CAN002&body={"opttype":0,"chntext":"' + input + '","createdby":"' + app.globalData.userInfo.userid + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -80,7 +80,7 @@ Page({
     var that = this
     var title = e.currentTarget.dataset.chntext + "[" + e.currentTarget.dataset.canpronounce + "]"
     wx.showActionSheet({
-      itemList: [title, '播放发音', '查询结果不对？点击反馈', '标记为生词'],
+      itemList: [title, '播放发音', '查询结果不对？点击反馈'],
       itemColor: "#22b14c",
       success: function (res) {
         switch (res.tapIndex) {
@@ -90,7 +90,7 @@ Page({
           } break
           case 2: {
             that.feedback(e)
-          } break;
+          } break
           case 3: {
             that.addtonewwords(e)
           } break
@@ -114,7 +114,7 @@ Page({
   },
   form1_submit: function (e) {
     var that = this
-    var input = e.detail.value.input;
+    var input = e.detail.value.input
     if (!input || input.trim().length == 0) {
       that.setData({
         message: '请输入要查询的字词'
@@ -143,7 +143,7 @@ Page({
           })
           return
         }
-        var innerResponse = {};
+        var innerResponse = {}
         try {
           innerResponse = JSON.parse(res.data.body)
         } catch (e) {
@@ -155,7 +155,7 @@ Page({
             message: message,
             results: []
           })
-          return;
+          return
         }
 
         wx.vibrateShort({})
@@ -169,6 +169,7 @@ Page({
           var canplay = true
           var timer1 = setInterval(function () {
             if (i >= innerResponse.results.length) {
+              i = 0
               canplay = true
               clearInterval(timer1)
               return
@@ -188,12 +189,10 @@ Page({
             }
 
             backgroundAudioManager.onError(function () {
-              console.log('e')
               canplay = true
               i += 1
             })
             backgroundAudioManager.onEnded(function () {
-              console.log('end')
               canplay = true
               i += 1
             })

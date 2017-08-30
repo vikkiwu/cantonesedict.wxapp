@@ -1,4 +1,3 @@
-// feedback.js
 const app = getApp()
 Page({
   play_voice: function (e) {
@@ -21,14 +20,10 @@ Page({
     page: 1,
     items: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  loaddata: function () {
     var that = this
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN007&body={"page":' + that.data.page + ',"pagesize":20,"createdby": "111"}',
+      url: 'https://wx.uimoe.com/home/index?code=CAN007&body={"page":' + that.data.page + ',"pagesize":20,"createdby": "' + app.globalData.userInfo.userid + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -68,6 +63,15 @@ Page({
         })
       }
     })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: '我的反馈'
+    })
+    this.loaddata()
   },
 
   /**

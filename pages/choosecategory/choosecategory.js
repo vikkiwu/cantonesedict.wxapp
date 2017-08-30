@@ -31,9 +31,27 @@ Page({
       }
     })
   },
-  choose:function(e){
+  choose: function (e) {
+    var categoryname = e.currentTarget.dataset.categoryname
+    var categoryid = e.currentTarget.dataset.categoryid
+
+    console.log(app.globalData)
+    var userid = 0
+    if (app.globalData.userInfo && app.globalData.userInfo.userid) {
+      userid = app.globalData.userInfo.userid
+    }
+
+    if (userid <= 0) {
+      wx.showToast({
+        title: '请先转到【我的】，登录后再执行此操作',
+        icon: 'success',
+        duration: 1000
+      })
+      return
+    }
+
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN013&body={"categoryid":1,"userid":1}',
+      url: 'https://wx.uimoe.com/home/index?code=CAN013&body={"categoryid":' + categoryid + ',"userid":' + userid + '}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -51,7 +69,15 @@ Page({
           console.log(res.data.body)
         }
 
-        app.globalData.learning = innerResponse
+        app.globalData.learning = {
+          categoryname: categoryname,
+          categoryid: categoryid,
+          todaycompleted: innerResponse.todaycompleted,
+          completed: innerResponse.completed,
+          total: innerResponse.total,
+          remains: innerResponse.remains
+        }
+        wx.setStorageSync('globalData', app.globalData)
       }
     })
     wx.navigateBack({})
@@ -77,48 +103,48 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   }
 })

@@ -3,6 +3,10 @@
 const app = getApp()
 
 var data = {
+  hasUserInfo: false,
+  userid: 0,
+  categoryname: '',
+  categoryid: 0,
   todaycompleted: 0,
   completed: 0,
   remains: 0,
@@ -41,14 +45,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (!app.globalData.learning) {
-      app.globalData.learning = {}
+    if (app.globalData.userInfo && app.globalData.userInfo.userid) {
+      data.hasUserInfo = true
+      data.userid = app.globalData.userInfo.userid
     }
-    data.todaycompleted = app.globalData.learning.todaycompleted || 0
-    data.completed = app.globalData.learning.completed || 0
-    data.remains = app.globalData.learning.remains || 0
-    data.total = app.globalData.learning.total || 0
+    if (app.globalData.learning) {
+      data.categoryname = app.globalData.learning.categoryname || ''
+      data.categoryid = app.globalData.learning.categoryid || 0
+      data.todaycompleted = app.globalData.learning.todaycompleted || 0
+      data.completed = app.globalData.learning.completed || 0
+      data.remains = app.globalData.learning.remains || 0
+      data.total = app.globalData.learning.total || 0
+    }
     this.setData(data)
+    console.log(app.globalData)
   },
 
   /**
