@@ -1,25 +1,25 @@
 <!--me.wxml-->
 <view class="border">
   <block wx:if="{{!hasUserInfo}}">
-    <view style="padding:5px;color:#22b14c;">*登录后可以保存生词，查看反馈信息等</view>
-    <view style="padding:5px;color:#22b14c;">*若账号不存在将自动创建并登录</view>
-    <form bindsubmit="form1_submit" bindreset="form1_reset">
-      <text style="margin-bottom:5px;">账号 </text><text style="margin-bottom:5px;color:#ff8080;">{{usernameerror}}</text>
-      <input name="username" type="text" bindinput="username_inputed" style="border-bottom:1px solid #e7e7e7;margin-bottom:5px;" />
-      <text style="margin-bottom:5px;">密码 </text><text style="margin-bottom:5px;color:#ff8080;">{{userpasserror}}</text>
-      <input name="userpass" type="password" bindinput="userpass_inputed" style="border-bottom:1px solid #e7e7e7;margin-bottom:5px;" />
-      <button type="primary" form-type="submit" style="margin-bottom:5px;">登录</button>
-      <text style="margin-bottom:5px;color:#ff8080;">{{message}}</text>
-    </form>
+    <view style="text-align:center;height:132px;line-height:132px;">
+      <image src="/images/icon.png" style="height:64px;width:64px;border-radius:32px;"></image>
+    </view>
+    <view style="padding:15px;">
+      <view style="height:32px;line-height:32px;color:#22b14c;">*登录后可以查看反馈信息等</view>
+      <view style="height:32px;line-height:32px;color:#22b14c;">*登录后会自动为你创建一个用户名</view>
+    </view>
+    <view style="padding:15px;">
+      <button type="primary" bindtap="login" style="margin-bottom:5px;">使用微信登录</button>
+    </view>
   </block>
   <block wx:else>
     <view style="border-bottom:1px solid #e7e7e7;border-top:1px solid #e7e7e7;background-color:#f8f8f8;padding:5px;">
       <view style="float:left;">
-        <image src="/images/me.png" style="height:64px;width:64px;"></image>
+        <image src="{{userInfo.avatarUrl}}" style="height:64px;width:64px;border-radius:32px;"></image>
       </view>
       <view style="float:left;">
         <view style="margin-left:5px;height:30px;line-height:30px;">{{userInfo.nickName}}</view>
-        <view style="margin-left:5px;height:30px;line-height:30px;">{{userInfo.username}}</view>
+        <view style="margin-left:5px;height:30px;line-height:30px;">{{userInfo.country}} {{userInfo.province}} {{userInfo.city}}</view>
       </view>
       <view style="clear:left;"></view>
     </view>
