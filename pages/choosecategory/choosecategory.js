@@ -78,9 +78,13 @@ Page({
           remains: innerResponse.remains
         }
         wx.setStorageSync('globalData', app.globalData)
+        var pages = getCurrentPages()
+        var prev = pages[pages.length - 2]
+        prev.data = app.globalData.learning
+        prev.setData(prev.data)
+        wx.navigateBack({})
       }
     })
-    wx.navigateBack({})
   },
   /**
    * 页面的初始数据

@@ -26,6 +26,7 @@ Page({
         items.push({ canpronounce: parts[i] })
       }
     }
+
     var i = 0
     var canplay = true
     var timer1 = setInterval(function () {
@@ -75,9 +76,6 @@ Page({
         wx.hideLoading()
         console.log(res.data)
         if (res.data.error == 7) {
-          wx.showToast({
-            title: '全部学完啦！'
-          })
           data.canchoose = false
           that.setData(data)
           return
@@ -93,6 +91,7 @@ Page({
           console.log(res.data.body)
         }
 
+        data.canchoose = true
         data.item = innerResponse
         that.setData(data)
 
@@ -105,18 +104,12 @@ Page({
   },
   next: function () {
     if (!data.canchoose) {
-      wx.showToast({
-        title: '全部学完啦！'
-      })
       return
     }
     this.loaddata()
   },
   completed: function (e) {
     if (!data.canchoose) {
-      wx.showToast({
-        title: '全部学完啦！'
-      })
       return
     }
 
@@ -136,6 +129,10 @@ Page({
         app.globalData.learning.todaycompleted += 1
         app.globalData.learning.completed += 1
         app.globalData.learning.remains -= 1
+        var pages = getCurrentPages()
+        var prev = pages[pages.length - 2]
+        prev.data = app.globalData.learning
+        prev.setData(prev.data)
       },
       fail: function () {
         wx.hideLoading()

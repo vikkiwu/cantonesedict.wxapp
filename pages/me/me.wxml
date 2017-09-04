@@ -5,7 +5,9 @@
       <image src="/images/icon.png" style="height:64px;width:64px;border-radius:32px;"></image>
     </view>
     <view style="padding:15px;">
-      <view style="height:32px;line-height:32px;color:#22b14c;">*登录后可以查看反馈信息等</view>
+      <view style="height:32px;line-height:32px;color:#22b14c;">*登录将获取并使用你的昵称</view>
+      <view style="height:32px;line-height:32px;color:#22b14c;">*登录后可以查看反馈信息</view>
+      <view style="height:32px;line-height:32px;color:#22b14c;">*登录后可以记录你的学习进度</view>
       <view style="height:32px;line-height:32px;color:#22b14c;">*登录后会自动为你创建一个用户名</view>
     </view>
     <view style="padding:15px;">
