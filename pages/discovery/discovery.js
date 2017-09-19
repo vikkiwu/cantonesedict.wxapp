@@ -1,3 +1,4 @@
+const app = getApp()
 var data = {
   groups: [
     { title: "最近更新", url: "/pages/newupdates/newupdates" },

@@ -1,4 +1,3 @@
-// register.js
 const app = getApp()
 Page({
   username_inputed: function (e) {
@@ -51,7 +50,7 @@ Page({
     }
 
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN010&body={"username":"' + username + '","userpass":"' + userpass + '"}',
+      url: app.globalData.api.url + '?code=CAN010&body={"username":"' + username + '","userpass":"' + userpass + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)

@@ -3,7 +3,7 @@ Page({
   loaddata: function () {
     var that = this
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN003&body={"page":1,"pagesize":10}',
+      url: app.globalData.api.url + '?code=CAN003&body={"page":1,"pagesize":10}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -51,7 +51,7 @@ Page({
     }
 
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN013&body={"categoryid":' + categoryid + ',"userid":' + userid + '}',
+      url: app.globalData.api.url + '?code=CAN013&body={"categoryid":' + categoryid + ',"userid":' + userid + '}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)

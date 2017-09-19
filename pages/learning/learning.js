@@ -1,7 +1,4 @@
-// learning.js
-//获取应用实例
 const app = getApp()
-
 var data = {
   hasUserInfo: false,
   userid: 0,

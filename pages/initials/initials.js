@@ -1,4 +1,4 @@
-// initials.js
+const app = getApp()
 var data = {
   items: [
     { chntext: "b", cantext: "波", canpronounce: "bo1", description: "bo1" },
@@ -32,7 +32,7 @@ Page({
       if (!e.currentTarget.dataset.canpronounce) {
         return
       }
-      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
     }
     wx.playBackgroundAudio({
       dataUrl: voiceurl,

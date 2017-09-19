@@ -1,9 +1,9 @@
-// vocabulary.js
+const app = getApp()
 Page({
   loaddata: function () {
     var that = this
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN003&body={"page":1,"pagesize":10}',
+      url: app.globalData.api.url + '?code=CAN003&body={"page":1,"pagesize":10}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)

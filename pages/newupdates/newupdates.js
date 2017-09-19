@@ -1,4 +1,4 @@
-// newupdates.js
+const app = getApp()
 Page({
   play_voice: function (e) {
     console.log(e.currentTarget)
@@ -9,7 +9,7 @@ Page({
       if (!e.currentTarget.dataset.canpronounce) {
         return
       }
-      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
     }
     wx.playBackgroundAudio({
       dataUrl: voiceurl,
@@ -22,7 +22,7 @@ Page({
   loaddata: function () {
     var that = this
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN005&body={"page":' + that.data.page + ',"pagesize":10}',
+      url: app.globalData.api.url + '?code=CAN005&body={"page":' + that.data.page + ',"pagesize":10}',
       method: 'POST',
       success: function (res) {
         wx.hideLoading()

@@ -47,7 +47,7 @@ Page({
       if (item.canvoice) {
         voiceurl = item.canvoice
       } else {
-        voiceurl = 'https://wx.uimoe.com/assets/voice/' + item.canpronounce + '.wav'
+        voiceurl = app.globalData.api.host + '/assets/voice/' + item.canpronounce + '.wav'
       }
 
       backgroundAudioManager.onError(function () {
@@ -70,7 +70,7 @@ Page({
       title: '努力加载中...'
     })
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=can015&body={"categoryid":' + data.categoryid + ',"userid":' + data.userid + '}',
+      url: app.globalData.api.url + '?code=can015&body={"categoryid":' + data.categoryid + ',"userid":' + data.userid + '}',
       method: 'POST',
       success: function (res) {
         wx.hideLoading()

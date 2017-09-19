@@ -1,4 +1,3 @@
-//获取应用实例
 const app = getApp()
 const backgroundAudioManager = wx.getBackgroundAudioManager()
 Page({
@@ -10,7 +9,7 @@ Page({
 
     if (!app.globalData.userInfo || !app.globalData.userInfo.nickName) {
       wx.showToast({
-        title: '请先转到【我的】，登录后再执行此操作',
+        title: '请先登录',
         icon: 'success',
         duration: 1000
       })
@@ -18,7 +17,7 @@ Page({
     }
 
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN002&body={"opttype":0,"chntext":"' + input + '"}',
+      url: app.globalData.api.url + '?code=CAN002&body={"opttype":0,"chntext":"' + input + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -38,7 +37,7 @@ Page({
 
     if (!app.globalData.userInfo || !app.globalData.userInfo.nickName) {
       wx.showToast({
-        title: '请先转到【我的】，登录后再执行此操作',
+        title: '请先登录',
         icon: 'success',
         duration: 1000
       })
@@ -46,7 +45,7 @@ Page({
     }
 
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN002&body={"opttype":0,"chntext":"' + input + '","createdby":"' + app.globalData.userInfo.userid + '"}',
+      url: app.globalData.api.url + '?code=CAN002&body={"opttype":0,"chntext":"' + input + '","createdby":"' + app.globalData.userInfo.userid + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -69,7 +68,7 @@ Page({
     if (e.currentTarget.dataset.canvoice) {
       voiceurl = e.currentTarget.dataset.canvoice
     } else {
-      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
     }
     wx.playBackgroundAudio({
       dataUrl: voiceurl,
@@ -79,20 +78,22 @@ Page({
   show_actions: function (e) {
     var that = this
     var title = e.currentTarget.dataset.chntext + "[" + e.currentTarget.dataset.canpronounce + "]"
+    var itemList = []
+    if (e.currentTarget.dataset.chntext) {
+      itemList = [title, '查询结果不对？点击反馈']
+    } else {
+      itemList = ['未找到结果', '点击反馈']
+    }
     wx.showActionSheet({
-      itemList: [title, '播放发音', '查询结果不对？点击反馈'],
+      itemList: itemList,
       itemColor: "#22b14c",
       success: function (res) {
         switch (res.tapIndex) {
-          case 0:
-          case 1: {
+          case 0: {
             that.play_voice(e)
           } break
-          case 2: {
+          case 1: {
             that.feedback(e)
-          } break
-          case 3: {
-            that.addtonewwords(e)
           } break
         }
       },
@@ -130,12 +131,12 @@ Page({
       title: '正在努力查询...'
     })
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN001&body={"input":"' + input + '"}',
+      url: app.globalData.api.url + '?code=CAN001&body={"input":"' + input + '"}',
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
         console.log(res.data)
-        var message = '未找到相关数据，点击文字反馈给我哦~'
+        var message = '未找到相关数据，点这里反馈给我哦~'
         if (res.data.error != 0) {
           that.setData({
             message: message,
@@ -185,7 +186,7 @@ Page({
             if (item.canvoice) {
               voiceurl = item.canvoice
             } else {
-              voiceurl = 'https://wx.uimoe.com/assets/voice/' + item.canpronounce + '.wav'
+              voiceurl = app.globalData.api.host + '/assets/voice/' + item.canpronounce + '.wav'
             }
 
             backgroundAudioManager.onError(function () {

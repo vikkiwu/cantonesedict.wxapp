@@ -1,5 +1,3 @@
-// me.js
-//获取应用实例
 const app = getApp()
 var data = {
   usernameerror: '',
@@ -19,7 +17,7 @@ Page({
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: 'https://wx.uimoe.com/home/index?code=CAN016&body={"code":"' + res.code + '"}',
+            url: app.globalData.api.url + '?code=CAN016&body={"code":"' + res.code + '"}',
             method: 'POST',
             success: function (res2) {
               if (res2.data.error != 0) {
@@ -41,7 +39,7 @@ Page({
                   var userInfo = res3.userInfo
                   console.log(userInfo)
                   wx.request({
-                    url: 'https://wx.uimoe.com/home/index?code=CAN012&body={"openid":"' + innerResponse.openid + '"}',
+                    url: app.globalData.api.url + '?code=CAN012&body={"openid":"' + innerResponse.openid + '"}',
                     method: 'POST',
                     success: function (res4) {
                       console.log(res4.data)
@@ -150,7 +148,7 @@ Page({
     }
 
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN014&body={"username":"' + username + '","userpass":"' + userpass + '"}',
+      url: app.globalData.api.url + '?code=CAN014&body={"username":"' + username + '","userpass":"' + userpass + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)

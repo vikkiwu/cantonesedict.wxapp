@@ -1,4 +1,4 @@
-// finals.js
+const app = getApp()
 var data = {
   items: [
     { chntext: "aa", cantext: "渣", canpronounce: "zaa1", description: "zaa1" },
@@ -66,10 +66,10 @@ Page({
     if (e.currentTarget.dataset.canvoice) {
       voiceurl = e.currentTarget.dataset.canvoice
     } else {
-      if (!e.currentTarget.dataset.canpronounce){
+      if (!e.currentTarget.dataset.canpronounce) {
         return
       }
-      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
     }
     wx.playBackgroundAudio({
       dataUrl: voiceurl,

@@ -10,7 +10,7 @@ Page({
     if (e.currentTarget.dataset.canvoice) {
       voiceurl = e.currentTarget.dataset.canvoice
     } else {
-      voiceurl = 'https://wx.uimoe.com/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
+      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
     }
     wx.playBackgroundAudio({
       dataUrl: voiceurl,
@@ -20,7 +20,7 @@ Page({
   loaddata: function () {
     var that = this
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=CAN004&body={"page":' + that.data.page + ',"pagesize":20,"id":' + that.data.vocabularyid + '}',
+      url: app.globalData.api.url + '?code=CAN004&body={"page":' + that.data.page + ',"pagesize":20,"id":' + that.data.vocabularyid + '}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
