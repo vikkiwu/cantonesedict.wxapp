@@ -7,12 +7,7 @@ var data = {
   todaycompleted: 0,
   completed: 0,
   remains: 0,
-  total: 0,
-  groups: [
-    { title: "声母", url: "/pages/initials/initials", description: "19" },
-    { title: "韵母", url: "/pages/finals/finals", description: "56" },
-    { title: "声调", url: "/pages/tones/tones", description: "9" }
-  ]
+  total: 0
 }
 Page({
 

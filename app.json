@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/basic/basic",
     "pages/query/query",
     "pages/vocabulary/vocabulary",
     "pages/categoryvocabulary/categoryvocabulary",
@@ -43,16 +44,16 @@
         "text": "学习"
       },
       {
+        "pagePath": "pages/basic/basic",
+        "iconPath": "images/voice.png",
+        "selectedIconPath": "images/voice.png",
+        "text": "基础"
+      },
+      {
         "pagePath": "pages/discovery/discovery",
         "iconPath": "images/safari.png",
         "selectedIconPath": "images/safari.png",
         "text": "发现"
-      },
-      {
-        "pagePath": "pages/me/me",
-        "iconPath": "images/me.png",
-        "selectedIconPath": "images/me.png",
-        "text": "我的"
       }
     ]
   }
