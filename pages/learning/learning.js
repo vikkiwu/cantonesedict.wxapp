@@ -7,7 +7,11 @@ var data = {
   todaycompleted: 0,
   completed: 0,
   remains: 0,
-  total: 0
+  total: 0,
+  groups: [
+    { title: "最近更新", url: "/pages/newupdates/newupdates" },
+    { title: "查询最多", url: "/pages/hotquery/hotquery" }
+  ]
 }
 Page({
 
