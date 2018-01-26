@@ -8,10 +8,7 @@ var data = {
   completed: 0,
   remains: 0,
   total: 0,
-  groups: [
-    { title: "最近更新", url: "/pages/newupdates/newupdates" },
-    { title: "查询最多", url: "/pages/hotquery/hotquery" }
-  ]
+  groups: []
 }
 Page({
 
@@ -24,24 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#22b14c',
-    })
-    if (app.globalData.userInfo && app.globalData.userInfo.userid) {
-      data.hasUserInfo = true
-      data.userid = app.globalData.userInfo.userid
-    }
-    if (app.globalData.learning) {
-      data.categoryname = app.globalData.learning.categoryname || ''
-      data.categoryid = app.globalData.learning.categoryid || 0
-      data.todaycompleted = app.globalData.learning.todaycompleted || 0
-      data.completed = app.globalData.learning.completed || 0
-      data.remains = app.globalData.learning.remains || 0
-      data.total = app.globalData.learning.total || 0
-    }
-    this.setData(data)
-    console.log(app.globalData)
+    
   },
 
   /**

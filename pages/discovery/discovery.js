@@ -3,11 +3,6 @@ var data = {
   groups: [
     { title: "最近更新", url: "/pages/newupdates/newupdates" },
     { title: "查询最多", url: "/pages/hotquery/hotquery" }
-  ],
-  groups2: [
-    { title: "我的生词", url: "/pages/newupdates/newupdates" },
-    { title: "我的查询", url: "/pages/hotquery/hotquery" },
-    { title: "我的学习", url: "/pages/hotquery/hotquery" }
   ]
 }
 Page({
