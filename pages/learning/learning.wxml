@@ -1,6 +1,6 @@
 <block wx:if="{{!hasUserInfo}}">
-  <view style="padding:10px 0;">
-    <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;border:1px solid #fff;width:200px;margin:0 auto;border:1px solid #e7e7e7;border-radius:10px;">选择词库，开始学习</navigator>
+  <view style="width:200px;height:100px;left:50%;top:50%;margin-left:-100px;margin-top:-50px;position:fixed;">
+    <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;border:1px solid #fff;border:1px solid #e7e7e7;border-radius:10px;">选择词库，开始学习</navigator>
   </view>
 </block>
 <block wx:else>

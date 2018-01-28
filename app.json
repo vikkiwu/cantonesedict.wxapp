@@ -15,9 +15,11 @@
     "pages/initials/initials",
     "pages/tones/tones",
     "pages/finals/finals",
-    "pages/mynewwords/mynewwords",
     "pages/choosecategory/choosecategory",
-    "pages/choosevocabulary/choosevocabulary"
+    "pages/choosevocabulary/choosevocabulary",
+    "pages/mynewwords/mynewwords",
+    "pages/myquery/myquery",
+    "pages/myfeedbacks/myfeedbacks"
   ],
   "window": {
     "backgroundTextStyle": "light",

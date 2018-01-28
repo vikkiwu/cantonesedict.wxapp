@@ -1,15 +1,8 @@
-const app = getApp()
 var data = {
-  groups: [
-    { title: "最近更新", url: "/pages/newupdates/newupdates" },
-    { title: "查询最多", url: "/pages/hotquery/hotquery" }
-  ], 
-  groups2: [
-    { title: "我的查询", url: "/pages/myquery/myquery" },
-    { title: "我的生词", url: "/pages/mynewwords/mynewwords" },
-    { title: "我的反馈", url: "/pages/myfeedbacks/myfeedbacks" }
-  ]
+  hasItems: false,
+  items: []
 }
+
 Page({
 
   /**

@@ -1,7 +1,9 @@
 const app = getApp()
 var data = {
   page: 1,
-  userid: 0
+  userid: 0,
+  hasItems:false,
+  items:[]
 }
 Page({
   play_voice: function (e) {
