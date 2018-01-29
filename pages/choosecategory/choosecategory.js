@@ -34,24 +34,8 @@ Page({
   choose: function (e) {
     var categoryname = e.currentTarget.dataset.categoryname
     var categoryid = e.currentTarget.dataset.categoryid
-
-    console.log(app.globalData)
-    var userid = 0
-    if (app.globalData.userInfo && app.globalData.userInfo.userid) {
-      userid = app.globalData.userInfo.userid
-    }
-
-    if (userid <= 0) {
-      wx.showToast({
-        title: '请先转到【我的】，登录后再执行此操作',
-        icon: 'success',
-        duration: 1000
-      })
-      return
-    }
-
     wx.request({
-      url: app.globalData.api.url + '?code=CAN013&body={"categoryid":' + categoryid + ',"userid":' + userid + '}',
+      url: app.globalData.api.url2 + '?code=CAN021&body={"categoryid":' + categoryid + '}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -59,28 +43,27 @@ Page({
         if (res.data.message) {
           message = res.data.message
         }
-        if (res.data.error != 0) {
+        if (res.data.status != 0) {
+          wx.showToast({
+            title: message,
+            icon: 'success',
+            duration: 1000
+          })
           return
         }
-        var innerResponse = {};
-        try {
-          innerResponse = JSON.parse(res.data.body)
-        } catch (e) {
-          console.log(res.data.body)
-        }
 
-        app.globalData.learning = {
-          categoryname: categoryname,
-          categoryid: categoryid,
-          todaycompleted: innerResponse.todaycompleted,
-          completed: innerResponse.completed,
-          total: innerResponse.total,
-          remains: innerResponse.remains
-        }
-        wx.setStorageSync('globalData', app.globalData)
+        app.globalData.learning.categoryname = res.data.body.learning.categoryname;
+        app.globalData.learning.categoryid = res.data.body.learning.categoryid;
+        app.globalData.learning.total = res.data.body.learning.total;
+        app.globalData.learning.complete = res.data.body.learning.complete;
+        app.globalData.learning.remain = res.data.body.learning.remain;
+
         var pages = getCurrentPages()
         var prev = pages[pages.length - 2]
-        prev.data = app.globalData.learning
+        prev.data = {
+          hasLearning: true,
+          learning: app.globalData.learning
+        }
         prev.setData(prev.data)
         wx.navigateBack({})
       }

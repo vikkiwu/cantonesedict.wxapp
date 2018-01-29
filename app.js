@@ -11,26 +11,34 @@ App({
   globalData: {
     api: {
       host: 'https://www.uimoe.com',
-      url: 'https://www.uimoe.com/api/index'
+      url: 'https://www.uimoe.com/api/index',
+      url2: 'https://www.uimoe.com/api/v2'
     },
-    userInfo: null,
-    learning: null
+    learning: {
+      categoryname:"",
+      categoryid:0,
+      total:0,
+      complete:0,
+      remain:0,
+      todaycomplete:0,
+      todaywords:[]
+    }
   },
-  init:function(){
+  init: function () {
+    var that = this
     wx.login({
       success: function (res) {
         wx.request({
-          url: 'https://www.uimoe.com/api/index?code=CAN019&body={"code":"' + res.code + '"}',
+          url: 'https://www.uimoe.com/api/v2?code=CAN020&body={"code":"' + res.code + '"}',
           method: 'POST',
           success: function (res) {
-            if (res.data.error != 0) {
+            console.log(res.data)
+            if (res.data.status != 0) {
               return
             }
 
-            var innerResponse = JSON.parse(res.data.body);
-            console.log(innerResponse);
-
-            
+            that.globalData.sk = res.data.body.sk
+            that.globalData.learning = res.data.body.learning
           },
           fail: function (e) {
             console.error(e);

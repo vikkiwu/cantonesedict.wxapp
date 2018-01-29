@@ -1,14 +1,15 @@
 const app = getApp()
 var data = {
-  hasUserInfo: false,
-  userid: 0,
-  categoryname: '',
-  categoryid: 0,
-  todaycompleted: 0,
-  completed: 0,
-  remains: 0,
-  total: 0,
-  groups: []
+  hasLearning:false,
+  learning: {
+    categoryname: "",
+    categoryid: 0,
+    total: 0,
+    complete: 0,
+    remain:0,
+    todaycomplete: 0,
+    todaywords: []
+  }
 }
 Page({
 
