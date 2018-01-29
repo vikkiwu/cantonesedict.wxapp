@@ -3,7 +3,6 @@ const backgroundAudioManager = wx.getBackgroundAudioManager()
 var data = {
   canchoose: true,
   categoryid: 0,
-  userid: 0,
   item: {}
 }
 Page({
@@ -70,32 +69,34 @@ Page({
       title: '努力加载中...'
     })
     wx.request({
-      url: app.globalData.api.url + '?code=can015&body={"categoryid":' + data.categoryid + ',"userid":' + data.userid + '}',
+      url: app.globalData.api.url2 + '?code=can022&body={"categoryid":' + data.categoryid + ',"sk":"' + app.globalData.sk + '"}',
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
         console.log(res.data)
-        if (res.data.error == 7) {
+        if (res.data.status == 7) {
           data.canchoose = false
           that.setData(data)
           return
         }
 
-        if (res.data.error != 0) {
+        if (res.data.status != 0) {
+          wx.showToast({
+            title: '系统繁忙，请稍后再试'
+          })
           return
         }
-        var innerResponse = {}
-        try {
-          innerResponse = JSON.parse(res.data.body)
-        } catch (e) {
-          console.log(res.data.body)
+
+        if (res.data.status == 0 && res.data.body.item.id == 0) {
+          data.canchoose = false
+          that.setData(data)
+          return
         }
 
         data.canchoose = true
-        data.item = innerResponse
+        data.item = res.data.body.item
         that.setData(data)
-
-        that.play_voice2(innerResponse.canpronounce, innerResponse.canvoice)
+        that.play_voice2(res.data.body.item.canpronounce, res.data.body.item.canvoice)
       },
       fail: function () {
         wx.hideLoading()
@@ -118,17 +119,17 @@ Page({
       return
     }
     wx.request({
-      url: 'https://wx.uimoe.com/home/index?code=can009&body={"vocabularyid":' + vocabularyid + ',"categoryid":' + data.categoryid + ',"userid":' + data.userid + '}',
+      url: app.globalData.api.url2 + '?code=can023&body={"vocabularyid":' + vocabularyid + ',"categoryid":' + data.categoryid + ',"sk":"' + app.globalData.sk + '"}',
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
-        if (res.data.error != 0) {
+        if (res.data.status != 0) {
           return
         }
 
-        app.globalData.learning.todaycompleted += 1
-        app.globalData.learning.completed += 1
-        app.globalData.learning.remains -= 1
+        app.globalData.learning.todaycomplete += 1
+        app.globalData.learning.complete += 1
+        app.globalData.learning.remain -= 1
         var pages = getCurrentPages()
         var prev = pages[pages.length - 2]
         prev.data = app.globalData.learning
@@ -150,7 +151,6 @@ Page({
    */
   onLoad: function (options) {
     data.categoryid = options.categoryid
-    data.userid = options.userid
     this.loaddata()
   },
 

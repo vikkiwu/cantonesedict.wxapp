@@ -35,7 +35,7 @@ Page({
     var categoryname = e.currentTarget.dataset.categoryname
     var categoryid = e.currentTarget.dataset.categoryid
     wx.request({
-      url: app.globalData.api.url2 + '?code=CAN021&body={"categoryid":' + categoryid + '}',
+      url: app.globalData.api.url2 + '?code=CAN021&body={"categoryid":' + categoryid + ',"sk":"' + app.globalData.sk + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -62,6 +62,7 @@ Page({
         var prev = pages[pages.length - 2]
         prev.data = {
           hasLearning: true,
+          hasLearningToday: app.globalData.hasLearningToday,
           learning: app.globalData.learning
         }
         prev.setData(prev.data)

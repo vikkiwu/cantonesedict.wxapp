@@ -10,18 +10,21 @@ App({
   },
   globalData: {
     api: {
-      host: 'https://www.uimoe.com',
+      host: 'https://www.uimoe.com/m',
       url: 'https://www.uimoe.com/api/index',
       url2: 'https://www.uimoe.com/api/v2'
     },
+    sk: '',
+    hasLearning: false,
+    hasLearningToday: false,
     learning: {
-      categoryname:"",
-      categoryid:0,
-      total:0,
-      complete:0,
-      remain:0,
-      todaycomplete:0,
-      todaywords:[]
+      categoryname: '',
+      categoryid: 0,
+      total: 0,
+      complete: 0,
+      remain: 0,
+      todaycomplete: 0,
+      todaywords: []
     }
   },
   init: function () {
@@ -38,6 +41,8 @@ App({
             }
 
             that.globalData.sk = res.data.body.sk
+            that.globalData.hasLearning = true
+            that.globalData.hasLearningToday = res.data.body.learning.todaywords.length > 0
             that.globalData.learning = res.data.body.learning
           },
           fail: function (e) {
