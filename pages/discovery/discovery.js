@@ -6,6 +6,7 @@ var data = {
   ], 
   groups2: [
     { title: "我的查询", url: "/pages/myquery/myquery" },
+    { title: "我的学习", url: "/pages/mylearning/mylearning" },
     { title: "我的生词", url: "/pages/mynewwords/mynewwords" },
     { title: "我的反馈", url: "/pages/myfeedbacks/myfeedbacks" }
   ]

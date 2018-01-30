@@ -4,7 +4,6 @@ var data = {
   hasItems: false,
   items: []
 }
-
 Page({
   play_voice: function (e) {
     console.log(e.currentTarget)
@@ -22,7 +21,7 @@ Page({
   loaddata: function () {
     var that = this
     wx.request({
-      url: app.globalData.api.url2 + '?code=CAN028&body={"page":' + that.data.page + ',"pagesize":20,"sk":"' + app.globalData.sk + '"}',
+      url: app.globalData.api.url2 + '?code=CAN027&body={"page":' + that.data.page + ',"pagesize":20,"sk":"' + app.globalData.sk + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)

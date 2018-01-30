@@ -19,7 +19,8 @@
     "pages/choosevocabulary/choosevocabulary",
     "pages/mynewwords/mynewwords",
     "pages/myquery/myquery",
-    "pages/myfeedbacks/myfeedbacks"
+    "pages/myfeedbacks/myfeedbacks",
+    "pages/mylearning/mylearning"
   ],
   "window": {
     "backgroundTextStyle": "light",

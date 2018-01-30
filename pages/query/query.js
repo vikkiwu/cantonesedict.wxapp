@@ -7,22 +7,13 @@ Page({
       return
     }
 
-    if (!app.globalData.userInfo || !app.globalData.userInfo.nickName) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'success',
-        duration: 1000
-      })
-      return
-    }
-
     wx.request({
-      url: app.globalData.api.url + '?code=CAN002&body={"opttype":0,"chntext":"' + input + '"}',
+      url: app.globalData.api.url2 + '?code=CAN029&body={"sk":"' + app.globalData.sk + '","chntext":"' + input + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
         wx.showToast({
-          title: '已添加到我的生词',
+          title: '已加到我的生词',
           icon: 'success',
           duration: 1000
         })
@@ -35,17 +26,8 @@ Page({
       return
     }
 
-    if (!app.globalData.userInfo || !app.globalData.userInfo.nickName) {
-      wx.showToast({
-        title: '请先登录',
-        icon: 'success',
-        duration: 1000
-      })
-      return
-    }
-
     wx.request({
-      url: app.globalData.api.url + '?code=CAN002&body={"opttype":0,"chntext":"' + input + '","createdby":"' + app.globalData.userInfo.userid + '"}',
+      url: app.globalData.api.url2 + '?code=CAN030&body={"chntext":"' + input + '","sk":"' + app.globalData.sk + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -80,7 +62,7 @@ Page({
     var title = e.currentTarget.dataset.chntext + "[" + e.currentTarget.dataset.canpronounce + "]"
     var itemList = []
     if (e.currentTarget.dataset.chntext) {
-      itemList = [title, '查询结果不对？点击反馈']
+      itemList = [title, '查询结果不对？点击反馈', '添加到生词']
     } else {
       itemList = ['未找到结果', '点击反馈']
     }
@@ -94,6 +76,9 @@ Page({
           } break
           case 1: {
             that.feedback(e)
+          } break
+          case 2: {
+            that.addtonewwords(e)
           } break
         }
       },
@@ -131,27 +116,21 @@ Page({
       title: '正在努力查询...'
     })
     wx.request({
-      url: app.globalData.api.url + '?code=CAN001&body={"input":"' + input + '"}',
+      url: app.globalData.api.url2 + '?code=CAN024&body={"input":"' + input + '","sk":"' + app.globalData.sk + '"}',
       method: 'POST',
       success: function (res) {
         wx.hideLoading()
         console.log(res.data)
         var message = '未找到相关数据，点这里反馈给我哦~'
-        if (res.data.error != 0) {
+        if (res.data.status != 0) {
           that.setData({
             message: message,
             results: []
           })
           return
         }
-        var innerResponse = {}
-        try {
-          innerResponse = JSON.parse(res.data.body)
-        } catch (e) {
-          console.log(res.data.body)
-        }
 
-        if (!innerResponse.results) {
+        if (!res.data.body.results || res.data.body.results.length == 0) {
           that.setData({
             message: message,
             results: []
@@ -161,15 +140,15 @@ Page({
 
         wx.vibrateShort({})
         that.setData({
-          message: '找到' + innerResponse.results.length + "个结果,长按结果项显示更多选项",
-          results: innerResponse.results
+          message: '找到' + res.data.body.results.length + "个结果,长按结果项显示更多选项",
+          results: res.data.body.results
         })
 
         if (that.data.playvoice) {
           var i = 0
           var canplay = true
           var timer1 = setInterval(function () {
-            if (i >= innerResponse.results.length) {
+            if (i >= res.data.body.results.length) {
               i = 0
               canplay = true
               clearInterval(timer1)
@@ -181,7 +160,7 @@ Page({
             }
 
             canplay = false
-            var item = innerResponse.results[i]
+            var item = res.data.body.results[i]
             var voiceurl = ''
             if (item.canvoice) {
               voiceurl = item.canvoice

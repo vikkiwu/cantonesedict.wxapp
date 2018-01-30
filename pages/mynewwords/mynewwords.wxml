@@ -8,9 +8,5 @@
 </view>
 </block>
 <block wx:else>
-<view style="padding:10px;border-bottom:1px solid #e7e7e7;">
-  <view style="float:left;">开发中，敬请期待</view>
-  <view style="float:right;"></view>
-  <view style="clear:both;"></view>
-</view>
+  <view style="margin:15px;text-align:center;height:100px;line-height:100px;background-color:#808080;color:#fff;border-radius:5px;">没有数据哦</view>
 </block>

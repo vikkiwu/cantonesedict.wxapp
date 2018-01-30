@@ -1,8 +1,8 @@
 const app = getApp()
 var data = {
   page: 1,
-  hasItems:false,
-  items:[]
+  hasItems: false,
+  items: []
 }
 Page({
   play_voice: function (e) {
@@ -21,7 +21,7 @@ Page({
   loaddata: function () {
     var that = this
     wx.request({
-      url: app.globalData.api.url + '?code=CAN004&body={"page":' + that.data.page + ',"pagesize":20,"id":' + that.data.vocabularyid + '}',
+      url: app.globalData.api.url2 + '?code=CAN026&body={"page":' + that.data.page + ',"pagesize":20,"sk":"' + app.globalData.sk + '"}',
       method: 'POST',
       success: function (res) {
         console.log(res.data)
@@ -29,7 +29,7 @@ Page({
         if (res.data.message) {
           message = res.data.message
         }
-        if (res.data.error != 0) {
+        if (res.data.status != 0) {
           wx.showToast({
             title: '没有更多了...',
             icon: 'success',
@@ -37,21 +37,12 @@ Page({
           })
           return
         }
-        var innerResponse = {};
-        try {
-          innerResponse = JSON.parse(res.data.body)
-        } catch (e) {
-          console.log(res.data.body)
-        }
-
-        if (!innerResponse.items) {
-          return;
-        }
 
         var newpage = that.data.page + 1
         that.setData({
           page: newpage,
-          items: innerResponse.items
+          hasItems: res.data.body.results.length > 0,
+          items: res.data.body.results
         })
       }
     })
