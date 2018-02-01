@@ -20,7 +20,9 @@
     "pages/mynewwords/mynewwords",
     "pages/myquery/myquery",
     "pages/myfeedbacks/myfeedbacks",
-    "pages/mylearning/mylearning"
+    "pages/mylearning/mylearning",
+    "pages/problems/problems",
+    "pages/advices/advices"
   ],
   "window": {
     "backgroundTextStyle": "light",

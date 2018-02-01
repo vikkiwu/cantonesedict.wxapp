@@ -14,3 +14,11 @@
     <view style="clear:both;"></view>
   </navigator>
 </view>
+<view style="text-align:center;padding:10px;background-color:#e7e7e7;border-bottom:1px solid #e7e7e7;">反馈建议</view>
+<view wx:key="title" wx:for="{{groups3}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
+  <navigator url="{{item.url}}">
+    <view style="float:left;">{{item.title}}</view>
+    <view style="float:right;">></view>
+    <view style="clear:both;"></view>
+  </navigator>
+</view>
