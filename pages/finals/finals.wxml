@@ -1,24 +1,25 @@
-<view style="background-color:#22b14c;color:#fff;position:fixed;top:0;width:100%;">
+<view style="background-color:#fff;color:#000;position:fixed;top:0;width:100%;">
   <view style="padding:10px;">
-    韵母可只有韵首，或韵首+韵尾，或只有韵尾（仅鼻音m,ng）
+    韵母可只有韵首，或韵首+韵尾，或只有韵尾（仅m,ng）
   </view>
-  <view style="padding-left:10px;padding-top:10px;">韵首</view>
-  <view style="padding:10px;">
-    aa,a,e,i,o,oe,eo,u,yu
-  </view>
-  <view style="padding-left:10px;padding-top:10px;">韵尾</view>
-  <view style="padding:10px;">
-    i,u,m(鼻音),n,ng(鼻音),p,t,k
+  <view style="padding:10px;">韵首aa,a,e,i,o,oe,eo,u,yu</view>
+  <view style="padding:10px;">韵尾i,u,m,n,ng,p,t,k</view>
+  <view style="display:flex;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#e7e7e7;">
+    <view style='width:15%;'>声母</view>
+    <view style='width:20%;'>例字</view>
+    <view style='width:25%;'>注音</view>
+    <view style='width:25%;'>普通话</view>
+    <view style='width:15%;'>发音</view>
   </view>
 </view>
-<view style="margin-top:218px;">
-  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
-    <view style="float:left;">
-      {{item.chntext}} 例：{{item.cantext}} {{item.description}}
-    </view>
-    <view style="float:right;">
+<view style="margin-top:200px;">
+  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" style="display:flex;margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
+    <view style='width:15%;'>{{item.chntext}}</view>
+    <view style='width:20%;'>{{item.cantext}}</view>
+    <view style='width:25%;'>{{item.canpronounce}}</view>
+    <view style='width:25%;'>{{item.description}}</view>
+    <view style='width:15%;'>
       <image style="height:20px;width:20px;" src="/images/voice.png"></image>
     </view>
-    <view style="clear:both;"></view>
   </view>
 </view>

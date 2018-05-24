@@ -61,20 +61,9 @@ var data = {
 }
 Page({
   play_voice: function (e) {
-    console.log(e.currentTarget)
-    var voiceurl = ''
-    if (e.currentTarget.dataset.canvoice) {
-      voiceurl = e.currentTarget.dataset.canvoice
-    } else {
-      if (!e.currentTarget.dataset.canpronounce) {
-        return
-      }
-      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
-    }
-    wx.playBackgroundAudio({
-      dataUrl: voiceurl,
-      title: e.currentTarget.dataset.canpronounce + '.wav',
-    })
+    var voice = e.currentTarget.dataset.canvoice;
+    var prounounce = e.currentTarget.dataset.canpronounce;
+    app.play_voice(voice, prounounce);
   },
   /**
    * 页面的初始数据
@@ -85,10 +74,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#22b14c',
-    })
     wx.setNavigationBarTitle({
       title: '韵母'
     })

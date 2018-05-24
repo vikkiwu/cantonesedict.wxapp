@@ -27,6 +27,52 @@ App({
       todaywords: []
     }
   },
+  play_index: -1,
+  playing: false,
+  play_voice: function (voice, prounounce) {
+    var that = this;
+    var urls = [];
+    if (voice) {
+      urls.push(voice);
+    } else {
+      if (prounounce) {
+        var parts = prounounce.split(' ');
+        for (var i = 0; i < parts.length; i++) {
+          var p = parts[i];
+          var url = 'https://www.uimoe.com/m/assets/voice/' + p + '.wav';
+          urls.push(url);
+        }
+      }
+    }
+    if (urls.length > 0) {
+      wx.onBackgroundAudioStop(function () {
+        that.playing = false;
+      });
+      var timer1 = setInterval(function () {
+        if (!that.playing) {
+          that.playing = true;
+          that.play_index += 1;
+          if (that.play_index > urls.length - 1) {
+            clearInterval(timer1);
+            that.playing = false;
+            that.play_index = -1;
+            return;
+          }
+
+          var url = urls[that.play_index];
+          if (url) {
+            wx.playBackgroundAudio({
+              dataUrl: url,
+              title: url,
+              fail: function () {
+                that.playing = false;
+              }
+            })
+          }
+        }
+      }, 1000);
+    }
+  },
   init: function () {
     var that = this
     wx.login({
