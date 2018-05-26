@@ -22,7 +22,8 @@
     "pages/myfeedbacks/myfeedbacks",
     "pages/mylearning/mylearning",
     "pages/problems/problems",
-    "pages/advices/advices"
+    "pages/advices/advices",
+    "pages/record/record"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,16 +44,22 @@
         "text": "查询"
       },
       {
-        "pagePath": "pages/learning/learning",
-        "iconPath": "images/icon_nav_cell.png",
-        "selectedIconPath": "images/icon_nav_cell.png",
-        "text": "学习"
+        "pagePath": "pages/record/record",
+        "iconPath": "images/record.png",
+        "selectedIconPath": "images/record.png",
+        "text": "实时"
       },
       {
         "pagePath": "pages/basic/basic",
         "iconPath": "images/voice.png",
         "selectedIconPath": "images/voice.png",
         "text": "基础"
+      },
+      {
+        "pagePath": "pages/learning/learning",
+        "iconPath": "images/icon_nav_cell.png",
+        "selectedIconPath": "images/icon_nav_cell.png",
+        "text": "学习"
       },
       {
         "pagePath": "pages/discovery/discovery",

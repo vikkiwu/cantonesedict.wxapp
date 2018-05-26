@@ -16,7 +16,8 @@ Page({
     var input = e.detail.value.input
     if (!input || input.trim().length == 0) {
       wx.showToast({
-        title: '请输入发现的问题'
+        title: '请输入发现的问题',
+        icon: 'none'
       })
       return
     }
@@ -32,13 +33,15 @@ Page({
         console.log(res.data)
         if (res.data.status != 0) {
           wx.showToast({
-            title: '系统繁忙，请稍后再试'
+            title: '系统繁忙，请稍后再试',
+            icon: 'none'
           })
           return
         }
 
         wx.showToast({
-          title: '提交成功，感谢您的反馈'
+          title: '提交成功，感谢您的反馈',
+          icon: 'none'
         })
       },
       fail: function () {

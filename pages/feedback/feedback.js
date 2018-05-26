@@ -34,8 +34,7 @@ Page({
         if (res.data.error != 0) {
           wx.showToast({
             title: message,
-            icon: 'success',
-            duration: 1000
+            icon: 'none'
           })
           return
         }
@@ -50,8 +49,7 @@ Page({
           message = "没有相关数据哦~";
           wx.showToast({
             title: message,
-            icon: 'success',
-            duration: 1000
+            icon: 'none'
           })
           return;
         }

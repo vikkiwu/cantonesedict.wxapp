@@ -8,6 +8,12 @@ var data = {
   init: true
 };
 Page({
+  changemode: function (e) {
+    wx.showToast({
+      title: '目前只支持普通话->粤语',
+      icon: 'none'
+    })
+  },
   addtonewwords: function (e) {
     var input = this.data.input
     if (!input) {
@@ -21,8 +27,7 @@ Page({
         console.log(res.data)
         wx.showToast({
           title: '已加到我的生词',
-          icon: 'success',
-          duration: 1000
+          icon: 'none'
         })
       }
     })
@@ -40,8 +45,7 @@ Page({
         console.log(res.data)
         wx.showToast({
           title: '感谢您的反馈',
-          icon: 'success',
-          duration: 1000
+          icon: 'none'
         })
       }
     })

@@ -26,8 +26,7 @@ Page({
         if (res.data.error != 0) {
           wx.showToast({
             title: '没有更多了...',
-            icon: 'success',
-            duration: 1000
+            icon: 'none'
           })
           return
         }

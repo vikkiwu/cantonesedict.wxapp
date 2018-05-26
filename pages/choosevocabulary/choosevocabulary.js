@@ -82,7 +82,8 @@ Page({
 
         if (res.data.status != 0) {
           wx.showToast({
-            title: '系统繁忙，请稍后再试'
+            title: '系统繁忙，请稍后再试',
+            icon: 'none'
           })
           return
         }

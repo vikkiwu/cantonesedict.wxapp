@@ -46,8 +46,7 @@ Page({
         if (res.data.status != 0) {
           wx.showToast({
             title: message,
-            icon: 'success',
-            duration: 1000
+            icon: 'none'
           })
           return
         }
