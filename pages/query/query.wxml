@@ -10,12 +10,24 @@
     </view>
     <button type="primary" form-type="submit">查询</button>
   </form>
-  <view bindtap="feedback" style="margin-top:5px;margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;color:#808080;background-color:#f8f8f8;">{{message}}</view>
-  <view data-chntext="{{item.chntext}}" data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindlongtap="show_actions" wx:key="chntext" wx:for="{{results}}" style="margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
-    <view style="float:left;">{{item.chntext}} {{item.canpronounce}}</view>
-    <view style="float:right;">
-      <image data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" style="height:20px;width:20px;" src="/images/voice.png"></image>
+<block wx:if="{{hasItems}}">
+    <view style="margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">{{message}}</view>
+  <view style="background-color:#fff;color:#000;width:100%;">
+    <view style="display:flex;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#e7e7e7;">
+      <view style='width:40%;padding-left:10px;'>普通话</view>
+      <view style='width:40%;padding-left:10px;'>粤语</view>
+      <view style='width:20%;padding-left:10px;'>发音</view>
     </view>
-    <view style="clear:both;"></view>
   </view>
+    <view bindlongpress='show_actions' data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" data-chntext="{{item.chntext}}" wx:key="id" wx:for="{{items}}" style="display:flex;margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
+      <view style='width:40%;padding-left:10px;'>{{item.chntext}}</view>
+      <view style='width:40%;padding-left:10px;'>{{item.canpronounce}}</view>
+      <view style='width:20%;padding-left:10px;'>
+        <image style="height:20px;width:20px;" src="/images/voice.png" bindtap="play_voice" data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" data-chntext="{{item.chntext}}"></image>
+      </view>
+    </view>
+</block>
+<block wx:else>
+  <view hidden='{{init}}' bindtap='feedback' style="margin-top:5px;text-align:center;height:100px;line-height:100px;background-color:#808080;color:#fff;border-radius:5px;">没有找到相关结果，点击反馈</view>
+</block>
 </view>

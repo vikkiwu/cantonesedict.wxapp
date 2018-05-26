@@ -1,26 +1,18 @@
 const app = getApp()
 Page({
   play_voice: function (e) {
-    console.log(e.currentTarget)
-    var voiceurl = ''
-    if (e.currentTarget.dataset.canvoice) {
-      voiceurl = e.currentTarget.dataset.canvoice
-    } else {
-      if (!e.currentTarget.dataset.canpronounce) {
-        return
-      }
-      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
-    }
-    wx.playBackgroundAudio({
-      dataUrl: voiceurl,
-      title: e.currentTarget.dataset.canpronounce + '.wav',
-    })
+    var voice = e.currentTarget.dataset.canvoice;
+    var prounounce = e.currentTarget.dataset.canpronounce;
+    app.play_voice(voice, prounounce);
   },
   form1_submit: function (e) {
     this.loaddata()
   },
   loaddata: function () {
     var that = this
+    wx.showLoading({
+      title: '加载中...'
+    })
     wx.request({
       url: app.globalData.api.url + '?code=CAN005&body={"page":' + that.data.page + ',"pagesize":10}',
       method: 'POST',
@@ -72,9 +64,6 @@ Page({
   onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: '最近更新'
-    })
-    wx.showLoading({
-      title: '加载中...'
     })
     this.loaddata()
   },

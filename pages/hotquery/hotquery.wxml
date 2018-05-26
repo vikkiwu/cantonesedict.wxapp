@@ -1,9 +1,12 @@
-<!--hotquery.wxml-->
-<view style="height:10px;border-bottom:1px solid #e7e7e7;" ></view>
-<view wx:key="name" wx:for="{{items}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
-  <view>
-    <view style="float:left;">{{item.name}}</view>
-    <view style="float:right;">{{item.count}}次</view>
-    <view style="clear:both;"></view>
+<view style="background-color:#fff;color:#000;position:fixed;top:0;width:100%;">
+  <view style="display:flex;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#e7e7e7;">
+    <view style='width:60%;padding-left:10px;'>普通话</view>
+    <view style='width:40%;padding-left:10px;'>查询次数</view>
+  </view>
+</view>
+<view style="margin-top:40px;">
+  <view wx:key="name" wx:for="{{items}}" style="display:flex;margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
+    <view style='width:60%;padding-left:10px;'>{{item.name}}</view>
+    <view style='width:40%;padding-left:10px;'>{{item.count}}次</view>
   </view>
 </view>

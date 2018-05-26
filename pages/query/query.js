@@ -1,5 +1,12 @@
 const app = getApp()
-const backgroundAudioManager = wx.getBackgroundAudioManager()
+var data = {
+  input: '',
+  inputLength: 0,
+  message: '...',
+  results: [],
+  playvoice: true,
+  init: true
+};
 Page({
   addtonewwords: function (e) {
     var input = this.data.input
@@ -96,6 +103,7 @@ Page({
     }
 
     that.setData({
+      init: false,
       input: input
     })
 
@@ -120,7 +128,8 @@ Page({
         if (!res.data.body.results || res.data.body.results.length == 0) {
           that.setData({
             message: message,
-            results: []
+            hasItems: false,
+            items: []
           })
           return
         }
@@ -128,46 +137,22 @@ Page({
         wx.vibrateShort({})
         that.setData({
           message: '找到' + res.data.body.results.length + "个结果,长按结果项显示更多选项",
-          results: res.data.body.results
+          hasItems: true,
+          items: res.data.body.results
         })
 
         if (that.data.playvoice) {
-          var i = 0
-          var canplay = true
-          var timer1 = setInterval(function () {
-            if (i >= res.data.body.results.length) {
-              i = 0
-              canplay = true
-              clearInterval(timer1)
-              return
-            }
+          var prounounces = '';
+          for (var i = 0; i < res.data.body.results.length; i++) {
+            var result = res.data.body.results[i]
+            prounounces += ' ' + result.canpronounce;
+          }
 
-            if (!canplay) {
-              return
-            }
+          if (prounounces) {
+            prounounces = prounounces.substr(1);
+          }
 
-            canplay = false
-            var item = res.data.body.results[i]
-            var voiceurl = ''
-            if (item.canvoice) {
-              voiceurl = item.canvoice
-            } else {
-              voiceurl = app.globalData.api.host + '/assets/voice/' + item.canpronounce + '.wav'
-            }
-
-            backgroundAudioManager.onError(function () {
-              canplay = true
-              i += 1
-            })
-            backgroundAudioManager.onEnded(function () {
-              canplay = true
-              i += 1
-            })
-            backgroundAudioManager.title = item.canpronounce + '.wav'
-            backgroundAudioManager.epname = 'vocabulary'
-            backgroundAudioManager.singer = '粤语小词典'
-            backgroundAudioManager.src = voiceurl
-          }, 100)
+          app.play_voice(null, prounounces);
         }
       },
       fail: function () {
@@ -179,13 +164,7 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    input: '',
-    inputLength: 0,
-    message: '...',
-    results: [],
-    playvoice: true
-  },
+  data: data,
 
   /**
    * 生命周期函数--监听页面加载
