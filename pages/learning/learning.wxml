@@ -1,38 +1,46 @@
-<block wx:if="{{!hasLearning}}">
-  <view style="width:200px;height:100px;left:50%;top:50%;margin-left:-100px;margin-top:-50px;position:fixed;">
-    <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;border:1px solid #fff;border:1px solid #e7e7e7;border-radius:10px;">选择词库，开始学习</navigator>
-  </view>
-</block>
-<block wx:else>
-  <view>
-    <view style='display:flex;height:40px;line-height:40px;background-color:#e7e7e7;border-bottom:1px solid #e7e7e7;'>
-      <view style='width:30%;'>
-        <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;"><image style="height:20px;width:20px;" src="/images/book.png"></image> 更换词库</navigator>
+<view style='position:fixed;left:0;top:0;width:100%;height:200px;background-color:#22b14c;color:#fff;'>
+  <block wx:if="{{!hasLearning}}">
+    <view style='display:flex;height:40px;line-height:40px;margin-top:60px;'>
+      <view style='flex:1;display:block;text-align:center;'></view>
+      <view style='flex:3;display:block;text-align:center;'>
+        <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;padding:10px;border:1px solid #fff;border:1px solid #e7e7e7;border-radius:10px;">选择词库，开始学习</navigator>
       </view>
-      <view style='width:40%;'>
-        <text style='text-align:center;'>{{learning.categoryname}}</text>
+      <view style='flex:1;display:block;text-align:center;'></view>
+    </view>
+  </block>
+  <block wx:else>
+    <view style='background-color:#22b14c;color:#fff;'>
+      <view style='display:flex;height:40px;line-height:40px;'>
+        <view style='flex:1;display:block;text-align:center;'>
+          <navigator url="/pages/choosecategory/choosecategory" style="text-align:center;">
+            <image style="height:20px;width:20px;" src="/images/book.png"></image>换词库</navigator>
+        </view>
+        <view style='flex:3;display:block;text-align:center;'>{{learning.categoryname}}</view>
+        <view style='flex:1;display:block;text-align:center;'></view>
       </view>
-      <view style='width:30%;'></view>
+      <view style='height:40px;line-height:40px;text-align:center;'>已学{{learning.complete}}个</view>
+      <view style='height:40px;line-height:40px;text-align:center;'>剩余{{learning.remain}}个</view>
+      <view style='height:40px;line-hei;;ght:40px;text-align:center;'>一共{{learning.total}}个</view>
+      <view style='display:flex;height:40px;line-height:40px;'>
+        <view style='flex:1;display:block;text-align:center;'></view>
+        <view style='flex:3;display:block;text-align:center;'>
+          <navigator style='background-color:#b5e61d;color:#fff;border-radius:10px;text-align:center;padding:10px;' url="/pages/choosevocabulary/choosevocabulary?categoryid={{learning.categoryid}}">继续学习</navigator>
+        </view>
+        <view style='flex:1;display:block;text-align:center;'></view>
+      </view>
     </view>
-    <navigator url="/pages/choosevocabulary/choosevocabulary?categoryid={{learning.categoryid}}" style="text-align:center;padding:10px;">已学
-      <text style="font-size:48px;">{{learning.complete}}</text> 个,点击继续学习
-    </navigator>
-  </view>
-  <view style="flex-direction:row;display:flex;justify-content:center;">
-    <view style="text-align:center;flex:1;border-right:1px solid #e7e7e7;padding:10px;">剩余{{learning.remain}}个</view>
-    <view style="text-align:center;flex:1;padding:10px;">一共{{learning.total}}个</view>
-  </view>
-  <view style='height:2px;border-bottom:1px solid #e7e7e7;'></view>
-</block>
-<block wx:if="{{hasLearningToday}}">
-  <view style="text-align:center;margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">今天学习{{learning.todaycomplete}}个</view>
-  <view style="background-color:#fff;color:#000;width:100%;">
-    <view style="display:flex;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#e7e7e7;">
-      <view style='width:40%;padding-left:10px;'>普通话</view>
-      <view style='width:40%;padding-left:10px;'>粤语</view>
-      <view style='width:20%;padding-left:10px;'>发音</view>
+  </block>
+</view>
+<view style='margin-top:240px;'>
+  <block wx:if="{{hasLearningToday}}">
+    <view style="text-align:center;margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">今天学习{{learning.todaycomplete}}个</view>
+    <view style="background-color:#fff;color:#000;width:100%;">
+      <view style="display:flex;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#e7e7e7;">
+        <view style='width:40%;padding-left:10px;'>普通话</view>
+        <view style='width:40%;padding-left:10px;'>粤语</view>
+        <view style='width:20%;padding-left:10px;'>发音</view>
+      </view>
     </view>
-  </view>
     <view bindtap="play_voice" data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" data-chntext="{{item.chntext}}" wx:key="id" wx:for="{{learning.todaywords}}" style="display:flex;margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
       <view style='width:40%;padding-left:10px;'>{{item.chntext}}</view>
       <view style='width:40%;padding-left:10px;'>{{item.canpronounce}}</view>
@@ -40,4 +48,5 @@
         <image style="height:20px;width:20px;" src="/images/voice.png"></image>
       </view>
     </view>
-</block>
+  </block>
+</view>

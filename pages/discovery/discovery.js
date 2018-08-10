@@ -1,19 +1,5 @@
 const app = getApp()
 var data = {
-  groups: [
-    { title: "最近更新", url: "/pages/newupdates/newupdates" },
-    { title: "查询最多", url: "/pages/hotquery/hotquery" }
-  ], 
-  groups2: [
-    { title: "我的查询", url: "/pages/myquery/myquery" },
-    { title: "我的学习", url: "/pages/mylearning/mylearning" },
-    { title: "我的生词", url: "/pages/mynewwords/mynewwords" },
-    { title: "我的反馈", url: "/pages/myfeedbacks/myfeedbacks" }
-  ],
-  groups3: [
-    { title: "问题反馈", url: "/pages/problems/problems" },
-    { title: "优化建议", url: "/pages/advices/advices" }
-  ]
 }
 Page({
 

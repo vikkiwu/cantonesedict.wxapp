@@ -128,9 +128,25 @@ Page({
           return
         }
 
-        app.globalData.learning.todaycomplete += 1
-        app.globalData.learning.complete += 1
-        app.globalData.learning.remain -= 1
+        app.globalData.hasLearning = true;
+        app.globalData.hasLearningToday = true;
+        app.globalData.learning.todaycomplete += 1;
+        app.globalData.learning.complete += 1;
+        app.globalData.learning.remain -= 1;
+        if (app.globalData.learning.todaywords) {
+          var words = [];
+          words.push({
+            chntext: e.currentTarget.dataset.chntext,
+            cantext: e.currentTarget.dataset.cantext,
+            canpronounce: e.currentTarget.dataset.canpronounce,
+            canvoice: e.currentTarget.dataset.canvoice
+          });
+          for (var i = 0; i < app.globalData.learning.todaywords.length; i++) {
+            var item = app.globalData.learning.todaywords[i];
+            words.push(item);
+          }
+          app.globalData.learning.todaywords = words;
+        }
         var pages = getCurrentPages()
         var prev = pages[pages.length - 2]
         prev.data = app.globalData.learning

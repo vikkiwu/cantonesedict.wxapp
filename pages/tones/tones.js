@@ -31,6 +31,11 @@ Page({
     wx.setNavigationBarTitle({
       title: '声调'
     })
+
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#22b14c'
+    })
   },
 
   /**

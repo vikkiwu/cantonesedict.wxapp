@@ -27,10 +27,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    data.hasLearning = app.globalData.hasLearning
-    data.hasLearningToday = app.globalData.hasLearningToday
-    data.learning = app.globalData.learning
-    this.setData(data)
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#22b14c'
+    })
   },
 
   /**
@@ -44,7 +44,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    data.hasLearning = app.globalData.hasLearning
+    data.hasLearningToday = app.globalData.hasLearningToday
+    data.learning = app.globalData.learning
+    this.setData(data)
   },
 
   /**

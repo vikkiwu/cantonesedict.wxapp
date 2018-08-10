@@ -1,10 +1,15 @@
 <block wx:if="{{canchoose}}">
   <view>
-    <view style="text-align:center;height:100px;line-height:100px;"><text style="font-size:48px;">{{item.chntext}}</text></view>
-    <view style="text-align:center;height:80px;line-height:80px;"><text style="font-size:28px;">{{item.canpronounce}}</text><image data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" style="height:20px;width:20px;" src="/images/voice.png"></image></view>
+    <view style="text-align:center;height:100px;line-height:100px;">
+      <text style="font-size:48px;">{{item.chntext}}</text>
+    </view>
+    <view style="text-align:center;height:80px;line-height:80px;">
+      <text style="font-size:28px;">{{item.canpronounce}}</text>
+      <image data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" style="height:20px;width:20px;" src="/images/voice.png"></image>
+    </view>
   </view>
   <view>
-    <button type="primary" style="margin:15px;" bindtap="completed" data-vocabularyid="{{item.id}}">会了，下一个</button>
+    <button type="primary" style="margin:15px;" bindtap="completed" data-chntext="{{item.chntext}}" data-cantext="{{item.cantext}}" data-canpronounce="{{item.canpronounce}}" data-canvoice="{{item.canvoice}}" data-vocabularyid="{{item.id}}">会了，下一个</button>
     <button type="default" style="margin:15px;" bindtap="next">换一个</button>
   </view>
 </block>

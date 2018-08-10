@@ -77,6 +77,11 @@ Page({
     wx.setNavigationBarTitle({
       title: '韵母'
     })
+
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#22b14c'
+    })
   },
 
   /**

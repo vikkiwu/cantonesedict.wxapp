@@ -40,6 +40,11 @@ Page({
     wx.setNavigationBarTitle({
       title: '声母'
     })
+
+    wx.setNavigationBarColor({
+      frontColor: '#ffffff',
+      backgroundColor: '#22b14c'
+    })
   },
 
   /**
