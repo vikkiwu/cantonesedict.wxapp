@@ -5,7 +5,8 @@ var data = {
   message: '...',
   results: [],
   playvoice: true,
-  init: true
+  init: true,
+  playvoice_after_query: true
 };
 Page({
   changemode: function (e) {
@@ -54,6 +55,9 @@ Page({
     var voice = e.currentTarget.dataset.canvoice;
     var prounounce = e.currentTarget.dataset.canpronounce;
     app.play_voice(voice, prounounce);
+  },
+  playvoicechanged: function (e) {
+    this.data.playvoice_after_query = e.detail.value;
   },
   show_actions: function (e) {
     var that = this
@@ -106,6 +110,15 @@ Page({
       return
     }
 
+    var rgx = new RegExp("^[\u4e00-\u9fa5]+$");
+    var rgx2 = new RegExp("^[0-9]+$");
+    if (!rgx.test(input) && !rgx2.test(input)) {
+      that.setData({
+        message: '请输入普通话汉字或数字'
+      })
+      return
+    }
+
     that.setData({
       init: false,
       input: input
@@ -145,7 +158,7 @@ Page({
           items: res.data.body.results
         })
 
-        if (that.data.playvoice) {
+        if (that.data.playvoice_after_query) {
           var prounounces = '';
           for (var i = 0; i < res.data.body.results.length; i++) {
             var result = res.data.body.results[i]
