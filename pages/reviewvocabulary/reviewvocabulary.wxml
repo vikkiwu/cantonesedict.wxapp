@@ -1,15 +1,9 @@
 <block wx:if="{{!can_choose}}">
-  <view class='nodata'>没有待学习的词</view>
+  <view class='nodata'>没有待复习的词</view>
 </block>
 <block wx:else>
   <view class='item' style='margin-top:0.5rem;'>
-    正在学习：{{plan.scene_name}}
-  </view>
-  <view class='item'>
-    剩余单词：{{plan.remain_words}}/{{plan.total_words}}
-  </view>
-  <view class='item' style='border-bottom:1px solid #ccc;'>
-    剩余天数：{{plan.remain_days}}/{{plan.total_days}}
+    正在复习：{{plan.scene_name}}
   </view>
   <view style="text-align:center;height:80px;line-height:80px;">
     <text style="font-size:28px;">{{learning.text}}</text>

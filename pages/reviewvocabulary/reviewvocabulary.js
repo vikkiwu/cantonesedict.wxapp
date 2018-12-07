@@ -1,66 +1,57 @@
 const app = getApp()
 Page({
-  textarea1_input: function (e) {
-    var that=this;
-    that.setData({
-      inputLength:e.detail.value.length
-    })
-  },
-  form1_reset: function () {
+  play_voice: function (e) {
     var that = this;
     that.setData({
-      inputLength: 0
-    })
+      voice_img: '/images/loading.gif'
+    });
+    app.play_voice(e, null, function () {
+      that.setData({
+        voice_img: '/images/voice.png'
+      });
+    });
   },
-  form1_submit: function (e) {
-    var that = this
-    var input = e.detail.value.input
-    if (!input || input.trim().length == 0) {
-      wx.showToast({
-        title: '请输入发现的问题',
-        icon: 'none'
-      })
-      return
-    }
-
-    wx.showLoading({
-      title: '正在提交...'
-    })
+  loaddata: function () {
+    var that = this;
     app.request_with_sk({
       url: app.globalData.api.url,
       method: 'GET',
       data: {
-        code: 'DICT0010',
+        code: 'DICT0007',
         body: JSON.stringify({
-          sk: app.globalData.sk,
-          content: input
+          sk: app.globalData.sk
         })
       }
     },
       function (res) {
-        wx.hideLoading()
         console.log(res.data)
-        if (res.data.status != 0) {
-          wx.showToast({
-            title: '系统繁忙，请稍后再试',
-            icon: 'none'
-          })
-          return
+        if (!res.data || !res.data.body || !res.data.body.learning || res.data.body.learning.length == 0) {
+          return;
         }
 
-        that.setData({ content: '', inputLength:0 });
-        wx.showToast({
-          title: '提交成功，感谢您的反馈',
-          icon: 'none'
-        })
+        var plan = res.data.body.plan || {};
+        var learning = res.data.body.learning[0];
+        var translation = learning.translation || {};
+        that.setData({
+          can_choose: true,
+          learning: translation,
+          plan: plan
+        });
       })
+  },
+  next: function () {
+    var that = this;
+    that.loaddata();
   },
   /**
    * 页面的初始数据
    */
   data: {
-    content: '',
-    inputLength: 0
+    voice_img: '/images/voice.png',
+    can_choose: false,
+    text: '',
+    explain: [],
+    plan: {}
   },
 
   /**
@@ -68,8 +59,10 @@ Page({
    */
   onLoad: function (options) {
     wx.setNavigationBarTitle({
-      title: '问题反馈'
-    });
+      title: '复习'
+    })
+    var that = this;
+    that.loaddata();
   },
 
   /**

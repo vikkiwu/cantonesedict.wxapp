@@ -1,44 +1,10 @@
 const app = getApp()
 Page({
-  loaddata: function () {
-    var that = this
-    wx.request({
-      url: app.globalData.api.url + '?code=CAN006&body={"page":1,"pagesize":10}',
-      method: 'POST',
-      success: function (res) {
-        wx.hideLoading()
-        console.log(res.data)
-        var message = '系统繁忙，请稍后再试哦~'
-        if (res.data.message) {
-          message = res.data.message
-        }
-        if (res.data.error != 0) {
-          return
-        }
-        var innerResponse = {};
-        try {
-          innerResponse = JSON.parse(res.data.body)
-        } catch (e) {
-          console.log(res.data.body)
-        }
-
-        if (!innerResponse.items) {
-          return;
-        }
-
-        that.setData({
-          items: innerResponse.items
-        })
-      },
-      fail: function () {
-        wx.hideLoading()
-      }
-    })
-  },
   /**
    * 页面的初始数据
    */
   data: {
+    hasItems: false,
     items: []
   },
 
@@ -47,12 +13,45 @@ Page({
    */
   onLoad: function (options) {
     wx.setNavigationBarTitle({
-      title: '查询最多'
+      title: '我的建议'
     })
     wx.showLoading({
       title: '加载中...'
     })
-    this.loaddata()
+
+    var that = this;
+    app.request_with_sk({
+      url: app.globalData.api.url,
+      method: 'GET',
+      data: {
+        code: 'DICT0013',
+        body: JSON.stringify({
+          sk: app.globalData.sk
+        })
+      }
+    },
+      function (res) {
+        wx.hideLoading();
+        console.log(res.data)
+        if (!res.data || !res.data.body || !res.data.body.items || res.data.body.items.length == 0) {
+          return;
+        }
+
+        var items = [];
+        for (var i = 0; i < res.data.body.items.length; i++) {
+          var item = res.data.body.items[i];
+          var create_at = app.format_date(new Date(item.create_at), 'yyyy/MM/dd HH:mm:ss')
+          items.push({
+            content: item.content,
+            create_at: create_at
+          });
+        }
+
+        that.setData({
+          hasItems: true,
+          items: items
+        });
+      })
   },
 
   /**

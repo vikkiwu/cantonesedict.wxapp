@@ -1,23 +1,28 @@
 const app = getApp()
 var data = {
+  content: '',
   inputLength: 0
 }
 Page({
   textarea1_input: function (e) {
-    data.inputLength = e.detail.value.length
-    this.setData(data)
+    var that = this;
+    that.setData({
+      inputLength: e.detail.value.length
+    })
   },
   form1_reset: function () {
-    data.inputLength = 0
-    this.setData(data)
+    var that = this;
+    that.setData({
+      inputLength: 0
+    })
   },
   form1_submit: function (e) {
     var that = this
     var input = e.detail.value.input
     if (!input || input.trim().length == 0) {
       wx.showToast({
-        title: '请输入发现的问题',
-        icon:'none'
+        title: '请输入你的建议',
+        icon: 'none'
       })
       return
     }
@@ -25,13 +30,21 @@ Page({
     wx.showLoading({
       title: '正在提交...'
     })
-    wx.request({
-      url: app.globalData.api.url2 + '?code=CAN032&body={"content":"' + input + '","sk":"' + app.globalData.sk + '"}',
-      method: 'POST',
-      success: function (res) {
+    app.request_with_sk({
+      url: app.globalData.api.url,
+      method: 'GET',
+      data: {
+        code: 'DICT0011',
+        body: JSON.stringify({
+          sk: app.globalData.sk,
+          content: input
+        })
+      }
+    },
+      function (res) {
         wx.hideLoading()
         console.log(res.data)
-        if (res.data.status != 0) {
+        if (!res.data || res.data.status != 0) {
           wx.showToast({
             title: '系统繁忙，请稍后再试',
             icon: 'none'
@@ -39,15 +52,13 @@ Page({
           return
         }
 
+        that.setData({ content: '', inputLength: 0 });
         wx.showToast({
           title: '提交成功，感谢您的建议',
           icon: 'none'
         })
-      },
-      fail: function () {
-        wx.hideLoading()
       }
-    })
+    )
   },
   /**
    * 页面的初始数据
@@ -58,7 +69,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    wx.setNavigationBarTitle({
+      title: '优化建议'
+    });
   },
 
   /**

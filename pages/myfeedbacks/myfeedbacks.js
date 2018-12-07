@@ -1,62 +1,56 @@
 const app = getApp()
-var data = {
-  page: 1,
-  hasItems: false,
-  items: []
-}
-
 Page({
-  play_voice: function (e) {
-    console.log(e.currentTarget)
-    var voiceurl = ''
-    if (e.currentTarget.dataset.canvoice) {
-      voiceurl = e.currentTarget.dataset.canvoice
-    } else {
-      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
-    }
-    wx.playBackgroundAudio({
-      dataUrl: voiceurl,
-      title: e.currentTarget.dataset.canpronounce + '.wav',
-    })
-  },
-  loaddata: function () {
-    var that = this
-    wx.request({
-      url: app.globalData.api.url2 + '?code=CAN028&body={"page":' + that.data.page + ',"pagesize":20,"sk":"' + app.globalData.sk + '"}',
-      method: 'POST',
-      success: function (res) {
-        console.log(res.data)
-        var message = '系统繁忙，请稍后再试哦~'
-        if (res.data.message) {
-          message = res.data.message
-        }
-        if (res.data.status != 0) {
-          wx.showToast({
-            title: '没有更多了...',
-            icon: 'none'
-          })
-          return
-        }
-
-        var newpage = that.data.page + 1
-        that.setData({
-          page: newpage,
-          hasItems: res.data.body.results.length > 0,
-          items: res.data.body.results
-        })
-      }
-    })
-  },
   /**
    * 页面的初始数据
    */
-  data: data,
+  data: {
+    hasItems: false,
+    items: []
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.loaddata()
+    wx.setNavigationBarTitle({
+      title: '我的反馈'
+    })
+    wx.showLoading({
+      title: '加载中...'
+    })
+
+    var that = this;
+    app.request_with_sk({
+      url: app.globalData.api.url,
+      method: 'GET',
+      data: {
+        code: 'DICT0012',
+        body: JSON.stringify({
+          sk: app.globalData.sk
+        })
+      }
+    },
+      function (res) {
+        wx.hideLoading();
+        console.log(res.data)
+        if (!res.data || !res.data.body || !res.data.body.items || res.data.body.items.length == 0) {
+          return;
+        }
+
+        var items = [];
+        for (var i = 0; i < res.data.body.items.length; i++) {
+          var item = res.data.body.items[i];
+          var create_at = app.format_date(new Date(item.create_at), 'yyyy/MM/dd HH:mm:ss')
+          items.push({
+            content: item.content,
+            create_at: create_at
+          });
+        }
+        that.setData({
+          hasItems: true,
+          items: items
+        });
+      })
   },
 
   /**

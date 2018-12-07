@@ -1,0 +1,24 @@
+<block wx:if="{{canIUse}}">
+  <block wx:if="{{canIGetUserInfo}}">
+    <view style='background-color:#f0f0f0;'>
+      <view style='text-align:center;'>
+        <view style='height:20rpx;'></view>
+        <image src='{{userInfo.avatarUrl}}' style='width:200rpx;border-radius:200rpx;' mode='widthFix'></image>
+        <view style='height:2rem;line-height:2rem;'>
+          <text>{{userInfo.nickName}}</text>
+        </view>
+      </view>
+      <view style='height:2rpx;border-bottom:1px solid #cccccc;'></view>
+      <navigator class='item' url='/pages/myquery/myquery'>我的查询</navigator>
+      <navigator class='item' url='/pages/mylearning/mylearning'>我的学习</navigator>
+      <navigator class='item' url='/pages/myadvices/myadvices'>我的建议</navigator>
+      <navigator class='item' url='/pages/myfeedbacks/myfeedbacks'>我的反馈</navigator>
+    </view>
+  </block>
+  <block wx:else>
+    <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" style='position:fixed;top:50%;left:50%;margin-top:-1rem;margin-left:-200rpx;color:#888;width:400rpx;'>使用微信登录</button>
+  </block>
+</block>
+<block wx:else>
+  <view style="position:fixed;top:50%;left:50%;margin-top:-1rem;margin-left:-200rpx;text-align:center;padding:10rpx;background-color:#f0f0f0;color:#888;border-radius:10rpx;height:2rem;line-height:2rem;width:400rpx;">请升级微信版本</view>
+</block>

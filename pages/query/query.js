@@ -1,193 +1,151 @@
 const app = getApp()
-var data = {
-  input: '',
-  inputLength: 0,
-  message: '...',
-  results: [],
-  playvoice: true,
-  init: true,
-  playvoice_after_query: true
-};
 Page({
-  changemode: function (e) {
-    wx.showToast({
-      title: '目前只支持普通话->粤语',
-      icon: 'none'
-    })
-  },
-  addtonewwords: function (e) {
-    var input = this.data.input
-    if (!input) {
-      return
-    }
-
-    wx.request({
-      url: app.globalData.api.url2 + '?code=CAN029&body={"sk":"' + app.globalData.sk + '","chntext":"' + input + '"}',
-      method: 'POST',
-      success: function (res) {
-        console.log(res.data)
-        wx.showToast({
-          title: '已加到我的生词',
-          icon: 'none'
-        })
-      }
-    })
-  },
-  feedback: function (e) {
-    var input = this.data.input
-    if (!input) {
-      return
-    }
-
-    wx.request({
-      url: app.globalData.api.url2 + '?code=CAN030&body={"chntext":"' + input + '","sk":"' + app.globalData.sk + '"}',
-      method: 'POST',
-      success: function (res) {
-        console.log(res.data)
-        wx.showToast({
-          title: '感谢您的反馈',
-          icon: 'none'
-        })
-      }
-    })
-  },
-  play_voice: function (e) {
-    var voice = e.currentTarget.dataset.canvoice;
-    var prounounce = e.currentTarget.dataset.canpronounce;
-    app.play_voice(voice, prounounce);
-  },
-  playvoicechanged: function (e) {
-    this.data.playvoice_after_query = e.detail.value;
-  },
-  show_actions: function (e) {
-    var that = this
-    var title = e.currentTarget.dataset.chntext + "[" + e.currentTarget.dataset.canpronounce + "]"
-    var itemList = []
-    if (e.currentTarget.dataset.chntext) {
-      itemList = [title, '查询结果不对？点击反馈', '添加到生词']
-    } else {
-      itemList = ['未找到结果', '点击反馈']
-    }
-    wx.showActionSheet({
-      itemList: itemList,
-      itemColor: "#22b14c",
-      success: function (res) {
-        switch (res.tapIndex) {
-          case 0: {
-            that.play_voice(e)
-          } break
-          case 1: {
-            that.feedback(e)
-          } break
-          case 2: {
-            that.addtonewwords(e)
-          } break
-        }
-      },
-      fail: function (res) {
-        console.log(res.errMsg)
-      }
-    })
-  },
-  textarea1_input: function (e) {
-    this.setData({
-      inputLength: e.detail.value.length
-    })
-  },
-  form1_reset: function () {
-    this.setData({
-      input: '',
-      results: []
-    })
-  },
-  form1_submit: function (e) {
-    var that = this
-    var input = e.detail.value.input
-    if (!input || input.trim().length == 0) {
-      that.setData({
-        message: '请输入要查询的字词'
-      })
-      return
-    }
-
-    var rgx = new RegExp("^[\u4e00-\u9fa5]+$");
-    var rgx2 = new RegExp("^[0-9]+$");
-    if (!rgx.test(input) && !rgx2.test(input)) {
-      that.setData({
-        message: '请输入普通话汉字或数字'
-      })
-      return
-    }
-
-    that.setData({
-      init: false,
-      input: input
-    })
-
-    wx.showLoading({
-      title: '正在努力查询...'
-    })
-    wx.request({
-      url: app.globalData.api.url2 + '?code=CAN024&body={"input":"' + input + '","sk":"' + app.globalData.sk + '"}',
-      method: 'POST',
-      success: function (res) {
-        wx.hideLoading()
-        console.log(res.data)
-        var message = '未找到相关数据，点这里反馈给我哦~'
-        if (res.data.status != 0) {
-          that.setData({
-            message: message,
-            results: []
-          })
-          return
-        }
-
-        if (!res.data.body.results || res.data.body.results.length == 0) {
-          that.setData({
-            message: message,
-            hasItems: false,
-            items: []
-          })
-          return
-        }
-
-        wx.vibrateShort({})
-        that.setData({
-          message: '找到' + res.data.body.results.length + "个结果,长按结果项显示更多选项",
-          hasItems: true,
-          items: res.data.body.results
-        })
-
-        if (that.data.playvoice_after_query) {
-          var prounounces = '';
-          for (var i = 0; i < res.data.body.results.length; i++) {
-            var result = res.data.body.results[i]
-            prounounces += ' ' + result.canpronounce;
-          }
-
-          if (prounounces) {
-            prounounces = prounounces.substr(1);
-          }
-
-          app.play_voice(null, prounounces);
-        }
-      },
-      fail: function () {
-        wx.hideLoading()
-      }
-    })
-  },
-
   /**
    * 页面的初始数据
    */
-  data: data,
+  data: {
+    items: [],
+    hot_query: [],
+    new_update: [],
+    my_query: [],
+    ready_to_query: true,
+    hide_fast_query: true,
+    hide_query_result: true,
+    query_placeholder: '输入要查询的字词(最多20字)',
+    voice_img: '/images/voice.png',
+    input: '',
+    input_focus: false
+  },
+  play_voice: function (e) {
+    var that = this;
+    that.setData({
+      voice_img: '/images/loading.gif'
+    });
+    app.play_voice(e, null, function () {
+      that.setData({
+        voice_img: '/images/voice.png'
+      });
+    });
+  },
+  query_input: function (e) {
+    this.setData({
+      input_focus: true,
+      hide_query_result: true,
+      hide_fast_query: false,
+      ready_to_query: false
+    });
+  },
+  query_cancel: function () {
+    this.setData({
+      ready_to_query: true
+    });
+  },
+  fast_query: function (e) {
+    var input = e.currentTarget.dataset.input;
+    if (!input) {
+      return;
+    }
 
+    var that = this;
+    that.input_change(e, input);
+    that.setData({
+      input: input
+    });
+  },
+  input_change: function (e, input) {
+    var that = this;
+    if (!input) {
+      input = e.detail.value;
+    }
+
+    if (!input) {
+      return;
+    }
+
+    var my_query = wx.getStorageSync('my_query');
+    if (!my_query) {
+      my_query = [];
+    }
+
+    my_query.push({
+      text: input,
+      query_at: new Date().getTime()
+    });
+
+    that.setData({
+      my_query: my_query
+    });
+
+    wx.setStorage({
+      key: 'my_query',
+      data: my_query
+    })
+
+    wx.showLoading({
+      title: '正在查询...'
+    })
+    app.request_with_sk({
+      url: app.globalData.api.url,
+      method: 'GET',
+      data: {
+        code: 'DICT0002',
+        body: JSON.stringify({
+          sk: app.globalData.sk,
+          input: input,
+          original_language: 'mandarin',
+          translation_language: 'cantonese'
+        })
+      }
+    },
+      function (res) {
+        wx.hideLoading();
+        console.log(res.data)
+        if (!res.data || !res.data.body || !res.data.body.items || res.data.body.items.length == 0) {
+          return;
+        }
+
+        that.setData({
+          hide_fast_query: true,
+          hide_query_result: false,
+          items: res.data.body.items
+        });
+      })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this;
+    wx.getStorage({
+      key: 'hot_query',
+      success: function (res) {
+        if (res.data && res.data.length > 0) {
+          that.setData({
+            hot_query: res.data
+          });
+        }
+      }
+    })
+    wx.getStorage({
+      key: 'new_update',
+      success: function (res) {
+        if (res.data && res.data.length > 0) {
+          that.setData({
+            new_update: res.data
+          });
+        }
+      }
+    })
+    wx.getStorage({
+      key: 'my_query',
+      success: function (res) {
+        if (res.data && res.data.length > 0) {
+          that.setData({
+            my_query: res.data
+          });
+        }
+      }
+    })
   },
 
   /**

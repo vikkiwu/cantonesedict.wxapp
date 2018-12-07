@@ -1,6 +1,6 @@
 <view style="padding:10px;">
   <form bindsubmit="form1_submit" bindreset="form1_reset">
-    <textarea name="input" bindinput="textarea1_input" placeholder="在这里输入您的建议..." maxlength="200"></textarea>
+    <textarea name="input" bindinput="textarea1_input" placeholder="在这里输入您的建议..." maxlength="200">{{content}}</textarea>
     <view style="padding:10px 0;">
       <view style="float:left;color:#808080;"></view>
       <view style="float:right;color:#808080;">{{inputLength}}/200</view>

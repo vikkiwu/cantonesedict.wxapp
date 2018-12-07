@@ -1,0 +1,10 @@
+/* me.wxss */
+
+.item {
+  border-bottom: 1px solid #ccc;
+  height: 3rem;
+  line-height: 3rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #fff;
+}

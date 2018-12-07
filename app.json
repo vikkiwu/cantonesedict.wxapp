@@ -1,33 +1,26 @@
 {
   "pages": [
     "pages/query/query",
-    "pages/vocabulary/vocabulary",
-    "pages/categoryvocabulary/categoryvocabulary",
-    "pages/newupdates/newupdates",
-    "pages/hotquery/hotquery",
     "pages/discovery/discovery",
-    "pages/me/me",
-    "pages/feedback/feedback",
+    "pages/mine/mine",
     "pages/learning/learning",
-    "pages/login/login",
-    "pages/register/register",
     "pages/initials/initials",
     "pages/tones/tones",
     "pages/finals/finals",
     "pages/choosecategory/choosecategory",
     "pages/choosevocabulary/choosevocabulary",
-    "pages/mynewwords/mynewwords",
     "pages/myquery/myquery",
     "pages/myfeedbacks/myfeedbacks",
     "pages/mylearning/mylearning",
     "pages/problems/problems",
     "pages/advices/advices",
-    "pages/record/record"
+    "pages/reviewvocabulary/reviewvocabulary",
+    "pages/myadvices/myadvices"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "粤语小词典",
+    "navigationBarTitleText": "粤语词典",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -53,6 +46,12 @@
         "iconPath": "images/safari.png",
         "selectedIconPath": "images/safari.png",
         "text": "发现"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "images/mine.png",
+        "selectedIconPath": "images/mine.png",
+        "text": "我的"
       }
     ]
   }

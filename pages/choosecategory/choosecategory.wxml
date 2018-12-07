@@ -1,5 +1,31 @@
-<view data-categoryname="{{item.name}}" data-categoryid="{{item.id}}" bindtap="choose" wx:key="name" wx:for="{{categories}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
+<view data-total='{{item.total}}' data-scene_name="{{item.name}}" data-scene_id="{{item.id}}" bindtap="choose" wx:key="id" wx:for="{{scenes}}" style="padding:10px;border-bottom:1px solid #e7e7e7;">
   <view style="float:left;">{{item.name}}</view>
-  <view style="float:right;">{{item.count}}></view>
+  <view style="float:right;">{{item.total}}></view>
   <view style="clear:both;"></view>
+</view>
+<view hidden='{{hide_set_plan}}'>
+  <view bindtap='hide_dialog' style='z-index:1000;position:fixed;left:0;top:0;height:100%;width:100%;background-color:rgba(0,0,0,0.8);'></view>
+  <view style='z-index:1010;position:fixed;left:50%;top:50%;height:12rem;width:600rpx;margin-left:-300rpx;margin-top:-6rem;background-color:#fff;'>
+    <view style='height:3rem;line-height:3rem;background-color:#f0f0f0;border-bottom:1px solid #ccc;text-align:center;'>设置学习计划：{{learning_plan.scene_name}}</view>
+    <view style='display:flex;height:3rem;line-height:3rem;'>
+      <text style='padding-left:50rpx;padding-right:50rpx;'>每天学习</text>
+      <view style='flex:1;'>
+        <input style='height:100%;' maxlength='3' bindchange='words_per_day_changed' type='text' value='{{learning_plan.words_per_day}}' />
+      </view>
+    </view>
+    <view style='display:flex;height:3rem;line-height:3rem;'>
+      <text style='padding-left:50rpx;padding-right:50rpx;'>到此日期</text>
+      <view style='flex:1;text-align:left;'>
+        <text>{{learning_end_at}}</text>
+      </view>
+    </view>
+    <view style='display:flex;height:3rem;line-height:3rem;border-top:1px solid #ccc;'>
+      <view bindtap='set_plan' style='flex:1;text-align:center;'>
+        <text style='color:#22b14c;'>确定</text>
+      </view>
+      <view bindtap='hide_dialog' style='flex:1;border-left:1px solid #ccc;text-align:center;'>
+        <text>取消</text>
+      </view>
+    </view>
+  </view>
 </view>

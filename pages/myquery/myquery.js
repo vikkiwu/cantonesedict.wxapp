@@ -1,62 +1,61 @@
 const app = getApp()
-var data = {
-  page: 1,
-  hasItems: false,
-  items: []
-}
 
 Page({
-  play_voice: function (e) {
-    console.log(e.currentTarget)
-    var voiceurl = ''
-    if (e.currentTarget.dataset.canvoice) {
-      voiceurl = e.currentTarget.dataset.canvoice
-    } else {
-      voiceurl = app.globalData.api.host + '/assets/voice/' + e.currentTarget.dataset.canpronounce + '.wav'
-    }
-    wx.playBackgroundAudio({
-      dataUrl: voiceurl,
-      title: e.currentTarget.dataset.canpronounce + '.wav',
-    })
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    hasItems: false,
+    items: []
   },
-  loaddata: function () {
-    var that = this
-    wx.request({
-      url: app.globalData.api.url2 + '?code=CAN026&body={"page":' + that.data.page + ',"pagesize":20,"sk":"' + app.globalData.sk + '"}',
-      method: 'POST',
+  clear_my_query: function () {
+    var that = this;
+    wx.setStorage({
+      key: 'my_query',
+      data: [],
       success: function (res) {
-        console.log(res.data)
-        var message = '系统繁忙，请稍后再试哦~'
-        if (res.data.message) {
-          message = res.data.message
-        }
-        if (res.data.status != 0) {
-          wx.showToast({
-            title: '没有更多了...',
-            icon: 'none'
-          })
-          return
-        }
-
-        var newpage = that.data.page + 1
         that.setData({
-          page: newpage,
-          hasItems: res.data.body.results.length > 0,
-          items: res.data.body.results
+          hasItems: false,
+          items: []
+        });
+        wx.showToast({
+          title: '已清除',
+          icon: 'none'
         })
       }
     })
   },
   /**
-   * 页面的初始数据
-   */
-  data: data,
-
-  /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.loaddata()
+    wx.setNavigationBarTitle({
+      title: '我的查询'
+    })
+    var that = this;
+    wx.getStorage({
+      key: 'my_query',
+      success: function (res) {
+        if (!res.data || res.data.length == 0) {
+          return;
+        }
+
+        var items = [];
+        for (var i = 0; i < res.data.length; i++) {
+          var item = res.data[i];
+          var query_at = app.format_date(new Date(item.query_at), 'yyyy/MM/dd HH:mm:ss')
+          items.push({
+            text: item.text,
+            query_at: query_at
+          });
+        }
+
+        that.setData({
+          hasItems: true,
+          items: items
+        });
+      },
+    })
   },
 
   /**

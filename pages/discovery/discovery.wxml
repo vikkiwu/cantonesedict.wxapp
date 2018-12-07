@@ -14,48 +14,6 @@
   </navigator>
   <view class="item-cell item-last"></view>
 </view>
-<view class="item-title">进阶</view>
-<view style='display:flex;'>
-  <navigator url="/pages/vocabulary/vocabulary" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/icon_nav_cell.png'></image>
-    <view>情景分类</view>
-  </navigator>
-  <view class="item-cell"></view>
-  <view class="item-cell"></view>
-  <view class="item-cell item-last"></view>
-</view>
-<view class="item-title">世界</view>
-<view style='display:flex;'>
-  <navigator url="/pages/newupdates/newupdates" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/update.png'></image>
-    <view>最近更新</view>
-  </navigator>
-  <navigator url="/pages/hotquery/hotquery" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/icon_nav_search_bar.png'></image>
-    <view>查询最多</view>
-  </navigator>
-  <view class="item-cell"></view>
-  <view class="item-cell item-last"></view>
-</view>
-<view class="item-title">我的</view>
-<view style='display:flex;'>
-  <navigator url="/pages/myquery/myquery" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/icon_nav_search_bar.png'></image>
-    <view>我的查询</view>
-  </navigator>
-  <navigator url="/pages/mylearning/mylearning" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/book.png'></image>
-    <view>我的学习</view>
-  </navigator>
-  <navigator url="/pages/mynewwords/mynewwords" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/book.png'></image>
-    <view>我的生词</view>
-  </navigator>
-  <navigator url="/pages/myfeedbacks/myfeedbacks" class="item-cell item-border item-last">
-    <image style='height:20px;width:20px;' src='/images/safari.png'></image>
-    <view>我的反馈</view>
-  </navigator>
-</view>
 <view class="item-title">反馈建议</view>
 <view style='display:flex;'>
   <navigator url="/pages/problems/problems" class="item-cell item-border">
@@ -69,4 +27,4 @@
   <view class="item-cell"></view>
   <view class="item-cell item-last"></view>
 </view>
-<view style='height:20px;width:100%;'></view>
+<official-account style="margin:20rpx;" bindload="bindload" binderror="binderror"></official-account>

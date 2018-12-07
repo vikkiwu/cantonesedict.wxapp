@@ -1,35 +1,42 @@
 const app = getApp()
-var data = {
-  hasLearning: false,
-  hasLearningToday: false,
-  learning: {
-    categoryname: "",
-    categoryid: 0,
-    total: 0,
-    complete: 0,
-    remain: 0,
-    todaycomplete: 0,
-    todaywords: []
-  }
-}
 Page({
-
+  change_scene: function () {
+    wx.navigateTo({
+      url: '/pages/choosecategory/choosecategory'
+    })
+  },
+  choose_words: function (e) {
+    var scene_id = e.currentTarget.dataset.scene_id;
+    wx.navigateTo({
+      url: '/pages/choosevocabulary/choosevocabulary?scene_id=' + scene_id
+    })
+  },
+  review_words: function (e) {
+    var scene_id = e.currentTarget.dataset.scene_id;
+    wx.navigateTo({
+      url: '/pages/reviewvocabulary/reviewvocabulary?scene_id=' + scene_id
+    })
+  },
   /**
    * 页面的初始数据
    */
-  data: data,
-  play_voice: function (e) {
-    var voice = e.currentTarget.dataset.canvoice;
-    var prounounce = e.currentTarget.dataset.canpronounce;
-    app.play_voice(voice, prounounce);
+  data: {
+    learnning_plan: {}
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.setNavigationBarColor({
-      frontColor: '#ffffff',
-      backgroundColor: '#22b14c'
+    var that = this;
+    wx.getStorage({
+      key: 'learnning_plan',
+      success: function (res) {
+        if (res.data) {
+          that.setData({
+            learnning_plan: res.data
+          });
+        }
+      },
     })
   },
 
@@ -44,10 +51,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    data.hasLearning = app.globalData.hasLearning
-    data.hasLearningToday = app.globalData.hasLearningToday
-    data.learning = app.globalData.learning
-    this.setData(data)
+
   },
 
   /**

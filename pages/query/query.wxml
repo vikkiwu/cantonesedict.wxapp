@@ -1,38 +1,55 @@
-<view bindtap='changemode' style='text-align:center;'>
-  <text>普通话 </text>
-  <image style="height:20px;width:20px;" src="/images/exchange.png"></image>
-  <text> 粤语</text>
+<view bindtap='query_input' hidden='{{!ready_to_query}}' style='position:fixed;top:0;left:0;width:100%;z-index:1000;'>
+  <view style='text-align:center;background-color:#f0f0f0;padding:20rpx;'>
+    <view style='background-color:#fff;height:80rpx;line-height:80rpx;text-align:center;width:100%;color:#808080;border-radius:6rpx;'>
+      <image src='/images/icon_nav_search_bar.png' style='width:40rpx;vertical-align:middle;' mode='widthFix'></image>
+      <text>{{query_placeholder}}</text>
+    </view>
+  </view>
 </view>
-<view class="border">
-  <form bindsubmit="form1_submit" bindreset="form1_reset">
-    <textarea name="input" bindinput="textarea1_input" placeholder="在这里输入普通话汉字或数字..." maxlength="20"></textarea>
-    <view style="padding:10px 0;">
-      <view style="float:left;color:#808080;">
-        <switch checked="{{playvoice_after_query}}" bindchange="playvoicechanged" />查询后播放发音
-      </view>
-      <view style="float:right;color:#808080;">{{inputLength}}/20</view>
-      <view style="clear:both;"></view>
+<view hidden='{{ready_to_query}}' style='position:fixed;top:0;left:0;width:100%;z-index:1010;'>
+  <view style='display:flex;background-color:#f0f0f0;padding:20rpx;'>
+    <view style='background-color:#fff;height:80rpx;line-height:80rpx;width:80rpx;text-align:center;border-top-left-radius:6rpx;border-bottom-left-radius:6rpx;'>
+      <image src='/images/icon_nav_search_bar.png' style='width:40rpx;vertical-align:middle;' mode='widthFix'></image>
     </view>
-    <button type="primary" form-type="submit">查询</button>
-  </form>
-  <view style="margin-top:5px;margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;padding-left:10px;">{{message}}</view>
-  <block wx:if="{{hasItems}}">
-    <view style="background-color:#fff;color:#000;width:100%;">
-      <view style="display:flex;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#e7e7e7;">
-        <view style='flex:2;display:block;padding-left:10px;'>普通话</view>
-        <view style='flex:2;display:block;padding-left:10px;'>粤语</view>
-        <view style='flex:1;display:block;padding-left:10px;'>发音</view>
-      </view>
+    <view style='flex:1;'>
+      <input focus='{{input_focus}}' value='{{input}}' bindchange='input_change' style='background-color:#fff;height:80rpx;line-height:80rpx;text-align:left;border-top-right-radius:6rpx;border-bottom-right-radius:6rpx;' placeholder='{{query_placeholder}}'></input>
     </view>
-    <view bindlongpress='show_actions' data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" data-chntext="{{item.chntext}}" wx:key="id" wx:for="{{items}}" style="display:flex;margin-bottom:5px;height:40px;line-height:40px;border-bottom:1px solid #e7e7e7;background-color:#f8f8f8;">
-      <view style='width:40%;padding-left:10px;'>{{item.chntext}}</view>
-      <view style='width:40%;padding-left:10px;'>{{item.canpronounce}}</view>
-      <view style='width:20%;padding-left:10px;'>
-        <image style="height:20px;width:20px;" src="/images/voice.png" bindtap="play_voice" data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" data-chntext="{{item.chntext}}"></image>
-      </view>
+    <view bindtap='query_cancel' style='background-color:#f0f0f0;height:80rpx;line-height:80rpx;width:80rpx;text-align:right;padding-left:10rpx;padding-right:10rpx'>
+      <text>取消</text>
     </view>
-  </block>
-  <block wx:else>
-    <view hidden='{{init}}' bindtap='feedback' style="margin-top:5px;text-align:center;height:100px;line-height:100px;background-color:#808080;color:#fff;border-radius:5px;">没有找到相关结果，点击反馈</view>
-  </block>
+  </view>
+  <view hidden='{{hide_fast_query}}'>
+    <block wx:if="{{hot_query && hot_query.length>0}}">
+      <view style='margin-left:20rpx;margin-right:20rpx;height:2rem;line-height:2rem;border-bottom:1px solid #ccc;color:#888;'>热门搜索</view>
+      <view style='margin-left:20rpx;margin-right:20rpx;'>
+        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{hot_query}}" wx:for-index="idx" wx:for-item="item" wx:key="text" style='float:left;padding:10rpx;background-color:#f0f0f0;color:#888;margin-top:10rpx;margin-right:10rpx;'>{{item.text}}</view>
+        <view style='clear:both;'></view>
+      </view>
+    </block>
+    <block wx:if="{{new_update && new_update.length>0}}">
+      <view style='margin-left:20rpx;margin-right:20rpx;height:2rem;line-height:2rem;border-bottom:1px solid #ccc;color:#888;'>最近更新</view>
+      <view style='margin-left:20rpx;margin-right:20rpx;'>
+        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{new_update}}" wx:for-index="idx" wx:for-item="item" wx:key="text" style='float:left;padding:10rpx;background-color:#f0f0f0;color:#888;margin-top:10rpx;margin-right:10rpx;'>{{item.text}}</view>
+        <view style='clear:both;'></view>
+      </view>
+    </block>
+    <block wx:if="{{my_query && my_query.length>0}}">
+      <view style='margin-left:20rpx;margin-right:20rpx;height:2rem;line-height:2rem;border-bottom:1px solid #ccc;color:#888;'>我的搜索</view>
+      <view style='margin-left:20rpx;margin-right:20rpx;'>
+        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{my_query}}" wx:for-index="idx" wx:for-item="item" wx:key="query_at" style='float:left;padding:10rpx;background-color:#f0f0f0;color:#888;margin-top:10rpx;margin-right:10rpx;'>{{item.text}}</view>
+        <view style='clear:both;'></view>
+      </view>
+    </block>
+    <ad style="margin:20rpx;height:200rpx;" unit-id="adunit-c60b77c462322683"></ad>
+  </view>
+  <view hidden='{{hide_query_result}}'>
+    <view style='margin-left:20rpx;margin-right:20rpx;height:3rem;line-height:3rem;border-bottom:1px solid #f0f0f0;' wx:for="{{items}}" wx:for-index="idx" wx:for-item="item" wx:key="text">
+      <text style='width:2rem;display:inline-block;'>{{item.text}}</text>
+      <block wx:for="{{item.explains}}" wx:for-index="idx2" wx:for-item="item2" wx:key="pronounce">
+        <text style='color:#888;padding:1rem 0;'>{{item2.pronounce}}</text>
+        <image data-voice_url="{{item2.voice_url}}" bindtap="play_voice" mode='widthFix' style="width:40rpx;margin-left:10rpx;" src="{{voice_img}}"></image>
+        <text style='color:#ccc;padding:1rem 0;'>/</text>
+      </block>
+    </view>
+  </view>
 </view>

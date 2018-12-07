@@ -1,1 +1,9 @@
-/**app.wxss**/
+.nodata {
+  margin: 1rem;
+  text-align: center;
+  height: 8rem;
+  line-height: 8rem;
+  background-color: #f0f0f0;
+  color: #ccc;
+  border-radius: 0.4rem;
+}
