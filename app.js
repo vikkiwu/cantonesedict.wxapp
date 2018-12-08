@@ -9,7 +9,7 @@ App({
       that.get_or_set_new_update();
       that.get_or_set_learnning_plan();
       that.get_or_set_scenes();
-    }, 5000);
+    }, 3000);
   },
   globalData: {
     sk: '',
@@ -36,16 +36,11 @@ App({
           //重新获取sk
           that.get_sk_with_login();
           setTimeout(function () {
-            var sk2 = wx.getStorageSync('sk');
-            if (sk2) {
-              that.request_with_sk(cfg, callback);
-            } else {
-              wx.showToast({
-                title: '服务器维护中...请1小时后再试',
-                icon: 'none'
-              })
-            }
-          }, 5000);
+            wx.showToast({
+              title: '网络似乎有点问题...请再试一次',
+              icon: 'none'
+            })
+          }, 3000);
           return;
         }
         callback && callback(res);
@@ -295,34 +290,6 @@ App({
       }
     )
   },
-  groupby: function (list, key) {
-    var groups = [];
-    for (var i = 0; i < list.length; i++) {
-      var item = list[i];
-      if (!item[key]) {
-        continue;
-      }
-
-      for (var m = 0; m < groups.length; m++) {
-        if (groups[m].key == item[key]) {
-          if (!groups[m].val) {
-            groups[m].val = [];
-          }
-
-          groups[m].val.push(item);
-        } else {
-          var val = [];
-          val.push(item);
-          groups.push({
-            name: item[key],
-            val: val
-          });
-        }
-      }
-    }
-
-    return groups;
-  },
   format_date: function (dt, format) {
     format = format.replace('yyyy', dt.getFullYear());
     format = format.replace('MM', dt.getMonth() + 1);
@@ -345,15 +312,10 @@ App({
       return;
     }
 
-    audio_context.onEnded = function (res) {
-      callbak && callbak();
-    };
-    audio_context.onError = function (res) {
-      var e = res || '';
-      console.error('播放失败:' + voice_url + ',' + e);
-      callbak && callbak();
-    };
     audio_context.src = voice_url;
     audio_context.play();
+    setTimeout(function () {
+      callbak && callbak();
+    }, 1000);
   }
 })

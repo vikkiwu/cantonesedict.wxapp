@@ -52,10 +52,21 @@ Page({
       input: input
     });
   },
+  has_query: function (groups, item) {
+    for (var i = 0; i < groups.length; i++) {
+      if (groups[i].text == item.text) {
+        return true;
+      }
+    }
+
+    return false;
+  },
   input_change: function (e, input) {
     var that = this;
     if (!input) {
-      input = e.detail.value;
+      if (e && e.detail && e.detail.value) {
+        input = e.detail.value;
+      }
     }
 
     if (!input) {
@@ -72,8 +83,18 @@ Page({
       query_at: new Date().getTime()
     });
 
+    var groups = [];
+    for (var i = my_query.length - 1; i >= 0; i--) {
+      var item = my_query[i];
+      if (!that.has_query(groups, item)) {
+        groups.push({
+          text: item.text
+        });
+      }
+    }
+
     that.setData({
-      my_query: my_query
+      my_query: groups
     });
 
     wx.setStorage({
@@ -140,8 +161,19 @@ Page({
       key: 'my_query',
       success: function (res) {
         if (res.data && res.data.length > 0) {
+          var my_query = res.data;
+          var groups = [];
+          for (var i = my_query.length - 1; i >= 0; i--) {
+            var item = my_query[i];
+            if (!that.has_query(groups, item)) {
+              groups.push({
+                text: item.text
+              });
+            }
+          }
+
           that.setData({
-            my_query: res.data
+            my_query: groups
           });
         }
       }

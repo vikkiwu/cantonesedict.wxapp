@@ -22,25 +22,25 @@
     <block wx:if="{{hot_query && hot_query.length>0}}">
       <view style='margin-left:20rpx;margin-right:20rpx;height:2rem;line-height:2rem;border-bottom:1px solid #ccc;color:#888;'>热门搜索</view>
       <view style='margin-left:20rpx;margin-right:20rpx;'>
-        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{hot_query}}" wx:for-index="idx" wx:for-item="item" wx:key="text" style='float:left;padding:10rpx;background-color:#f0f0f0;color:#888;margin-top:10rpx;margin-right:10rpx;'>{{item.text}}</view>
+        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{hot_query}}" wx:for-index="idx" wx:for-item="item" wx:key="text" class='item'>{{item.text}}</view>
         <view style='clear:both;'></view>
       </view>
     </block>
     <block wx:if="{{new_update && new_update.length>0}}">
       <view style='margin-left:20rpx;margin-right:20rpx;height:2rem;line-height:2rem;border-bottom:1px solid #ccc;color:#888;'>最近更新</view>
       <view style='margin-left:20rpx;margin-right:20rpx;'>
-        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{new_update}}" wx:for-index="idx" wx:for-item="item" wx:key="text" style='float:left;padding:10rpx;background-color:#f0f0f0;color:#888;margin-top:10rpx;margin-right:10rpx;'>{{item.text}}</view>
+        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{new_update}}" wx:for-index="idx" wx:for-item="item" wx:key="text" class='item'>{{item.text}}</view>
         <view style='clear:both;'></view>
       </view>
     </block>
     <block wx:if="{{my_query && my_query.length>0}}">
       <view style='margin-left:20rpx;margin-right:20rpx;height:2rem;line-height:2rem;border-bottom:1px solid #ccc;color:#888;'>我的搜索</view>
       <view style='margin-left:20rpx;margin-right:20rpx;'>
-        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{my_query}}" wx:for-index="idx" wx:for-item="item" wx:key="query_at" style='float:left;padding:10rpx;background-color:#f0f0f0;color:#888;margin-top:10rpx;margin-right:10rpx;'>{{item.text}}</view>
+        <view data-input="{{item.text}}" bindtap='fast_query' wx:for="{{my_query}}" wx:for-index="idx" wx:for-item="item" wx:key="query_at" class='item'>{{item.text}}</view>
         <view style='clear:both;'></view>
       </view>
     </block>
-    <ad style="margin:20rpx;height:200rpx;" unit-id="adunit-c60b77c462322683"></ad>
+    <ad style="width:100% !important;margin:20rpx;" unit-id="adunit-c60b77c462322683"></ad>
   </view>
   <view hidden='{{hide_query_result}}'>
     <view style='margin-left:20rpx;margin-right:20rpx;height:3rem;line-height:3rem;border-bottom:1px solid #f0f0f0;' wx:for="{{items}}" wx:for-index="idx" wx:for-item="item" wx:key="text">

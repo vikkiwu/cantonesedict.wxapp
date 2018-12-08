@@ -1,3 +1,9 @@
-.border{
-  padding: 20rpx;
+.item {
+  border-radius: 20rpx;
+  float: left;
+  padding: 10rpx;
+  background-color: #f0f0f0;
+  color: #888;
+  margin-top: 10rpx;
+  margin-right: 10rpx;
 }
