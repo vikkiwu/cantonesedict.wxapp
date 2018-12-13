@@ -1,1 +1,39 @@
 /* finals.wxss */
+
+.tab {
+  height: 3rem;
+  line-height: 3rem;
+  display: flex;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  background-color: #22b14c;
+  color: #fff;
+}
+
+.tips {
+  background-color: #22b14c;
+  color: #fff;
+  line-height: 3rem;
+  height: 9rem;
+  padding: 0 1rem;
+}
+
+.tablehead {
+  background-color: #b5e61d;
+  color: #fff;
+}
+
+.tablerow {
+  display: flex;
+  line-height: 3rem;
+  height: 3rem;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.tablecol {
+  display: block;
+  flex: 1;
+  text-align: left;
+  padding-left: 1rem;
+}

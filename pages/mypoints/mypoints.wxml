@@ -1,0 +1,12 @@
+<block wx:if="{{!hasItems}}">
+  <view class='nodata'>没有数据哦</view>
+</block>
+<block wx:else>
+  <view style='border-bottom:1px solid #f0f0f0;' wx:for="{{items}}" wx:for-index="idx" wx:for-item="item" wx:key="create_at">
+    <view style="height:3rem;line-height:3rem;margin-left:1rem;margin-right:1rem;">
+      <text style='float:left;'>{{item.points_from}}获得积分</text>
+      <text style='float:right;'>+{{item.points}}</text>
+    </view>
+    <view style="height:3rem;line-height:3rem;margin-left:1rem;margin-right:1rem;text-align:right;color:#888;">{{item.create_at}}</view>
+  </view>
+</block>

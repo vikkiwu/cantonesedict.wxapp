@@ -15,7 +15,9 @@
     "pages/problems/problems",
     "pages/advices/advices",
     "pages/reviewvocabulary/reviewvocabulary",
-    "pages/myadvices/myadvices"
+    "pages/myadvices/myadvices",
+    "pages/rank/rank",
+    "pages/mypoints/mypoints"
   ],
   "window": {
     "backgroundTextStyle": "light",

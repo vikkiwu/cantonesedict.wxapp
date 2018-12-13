@@ -1,3 +1,7 @@
+image {
+  vertical-align: middle;
+}
+
 .nodata {
   margin: 1rem;
   text-align: center;

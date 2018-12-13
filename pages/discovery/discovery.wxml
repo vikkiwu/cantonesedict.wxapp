@@ -1,27 +1,37 @@
 <view class="item-title">基础</view>
 <view style='display:flex;'>
   <navigator url="/pages/initials/initials" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/voice.png'></image>
+    <image style='height:40rpx;width:40rpx;' src='/images/voice.png'></image>
     <view>声母</view>
   </navigator>
   <navigator url="/pages/finals/finals" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/voice.png'></image>
+    <image style='height:40rpx;width:40rpx;' src='/images/voice.png'></image>
     <view>韵母</view>
   </navigator>
   <navigator url="/pages/tones/tones" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/voice.png'></image>
+    <image style='height:40rpx;width:40rpx;' src='/images/voice.png'></image>
     <view>声调</view>
   </navigator>
+  <view class="item-cell item-last"></view>
+</view>
+<view class="item-title">排行</view>
+<view style='display:flex;'>
+  <navigator url="/pages/rank/rank" class="item-cell item-border">
+    <image style='height:40rpx;width:40rpx;' src='/images/rank.png'></image>
+    <view>积分排行</view>
+  </navigator>
+  <view class="item-cell"></view>
+  <view class="item-cell"></view>
   <view class="item-cell item-last"></view>
 </view>
 <view class="item-title">反馈建议</view>
 <view style='display:flex;'>
   <navigator url="/pages/problems/problems" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/safari.png'></image>
+    <image style='height:40rpx;width:40rpx;' src='/images/safari.png'></image>
     <view>问题反馈</view>
   </navigator>
   <navigator url="/pages/advices/advices" class="item-cell item-border">
-    <image style='height:20px;width:20px;' src='/images/safari.png'></image>
+    <image style='height:40rpx;width:40rpx;' src='/images/safari.png'></image>
     <view>优化建议</view>
   </navigator>
   <view class="item-cell"></view>

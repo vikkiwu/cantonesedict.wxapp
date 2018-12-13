@@ -1,6 +1,7 @@
 const app = getApp()
 Page({
   data: {
+    points: 0,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     canIGetUserInfo: false,
     userInfo: {
@@ -12,6 +13,11 @@ Page({
       nickName: '用户',
       province: 'Guangdong'
     }
+  },
+  to_my_points: function () {
+    wx.navigateTo({
+      url: '/pages/mypoints/mypoints',
+    })
   },
   onLoad: function () {
     var that = this;
@@ -27,11 +33,36 @@ Page({
                 canIGetUserInfo: true,
                 userInfo: res.userInfo
               });
+              that.get_total_points();
             }
           })
         }
       }
     })
+  },
+  get_total_points:function(){
+    var that=this;
+    app.request_with_sk({
+      url: app.globalData.api.url,
+      method: 'GET',
+      data: {
+        code: 'DICT0015',
+        body: JSON.stringify({
+          sk: app.globalData.sk
+        })
+      }
+    },
+      function (res) {
+        console.log(res.data)
+        if (!res.data || !res.data.body || !res.data.body.total_points) {
+          return;
+        }
+
+        that.setData({
+          points: res.data.body.total_points
+        });
+      }
+    )
   },
   bindGetUserInfo(e) {
     console.log(e.detail.userInfo);

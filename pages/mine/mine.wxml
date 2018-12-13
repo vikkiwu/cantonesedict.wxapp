@@ -1,18 +1,23 @@
 <block wx:if="{{canIUse}}">
   <block wx:if="{{canIGetUserInfo}}">
-    <view style='background-color:#f0f0f0;'>
+    <view>
       <view style='text-align:center;'>
         <view style='height:20rpx;'></view>
         <image src='{{userInfo.avatarUrl}}' style='width:200rpx;border-radius:200rpx;' mode='widthFix'></image>
         <view style='height:2rem;line-height:2rem;'>
           <text>{{userInfo.nickName}}</text>
         </view>
+        <view style='height:2rem;line-height:2rem;'>
+          <text>积分：{{points}}</text>
+          <text style='margin-left:1rem;color:#22b14c;' bindtap='to_my_points'>查看</text>
+        </view>
       </view>
-      <view style='height:2rpx;border-bottom:1px solid #cccccc;'></view>
+      <view style='height:10rpx;border-bottom:1px solid #cccccc;'></view>
       <navigator class='item' url='/pages/myquery/myquery'>我的查询</navigator>
       <navigator class='item' url='/pages/mylearning/mylearning'>我的学习</navigator>
       <navigator class='item' url='/pages/myadvices/myadvices'>我的建议</navigator>
-      <navigator class='item' url='/pages/myfeedbacks/myfeedbacks'>我的反馈</navigator>
+      <navigator class='item-last' url='/pages/myfeedbacks/myfeedbacks'>我的反馈</navigator>
+      <view style='height:10rpx;border-bottom:1px solid #cccccc;'></view>
     </view>
   </block>
   <block wx:else>

@@ -1,0 +1,23 @@
+<!--pages/rank/rank.wxml-->
+<view wx:for="{{items}}" wx:for-index="idx" wx:for-item="item" wx:key="i" style='display:flex;border-bottom:1px solid #ccc;'>
+  <view style='width:3rem;height:4.2rem;line-height:4.2rem;text-align:center;'>{{item.i}}
+  </view>
+  <view style='height:4.2rem;line-height:4.2rem;text-align:center;'>
+    <image src='/images/mine.png' style='width:3rem;' mode='widthFix'></image>
+  </view>
+  <view style='flex:1;'>
+    <view style='height:2rem;line-height:2rem;'>{{item.user_name}}</view>
+    <view style='height:1.2rem;line-height:1.2rem;'>{{item.points}}</view>
+  </view>
+</view>
+<view style='position:fixed;bottom:0;border-top:1px solid #ccc;width:100%;display:flex;'>
+  <view style='width:3rem;height:4.2rem;line-height:4.2rem;text-align:center;'>{{me.i}}
+  </view>
+  <view style='height:4.2rem;line-height:4.2rem;text-align:center;'>
+    <image src='/images/mine.png' style='width:3rem;' mode='widthFix'></image>
+  </view>
+  <view style='flex:1;'>
+    <view style='height:2rem;line-height:2rem;'>{{me.user_name}}</view>
+    <view style='height:1.2rem;line-height:1.2rem;'>{{me.points}}</view>
+  </view>
+</view>

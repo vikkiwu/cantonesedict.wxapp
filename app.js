@@ -5,15 +5,18 @@ App({
     var that = this;
     that.get_or_set_sk();
     setTimeout(function () {
-      that.get_or_set_hot_query();
-      that.get_or_set_new_update();
-      that.get_or_set_learnning_plan();
-      that.get_or_set_scenes();
+      that.get_or_set_scenes(function () {
+        that.get_or_set_hot_query();
+        that.get_or_set_new_update();
+        that.get_or_set_learnning_plan();
+        that.get_or_set_user_points_rank();
+      });
     }, 3000);
   },
   globalData: {
     sk: '',
     api: {
+      host: 'https://uimoe.com',
       url: 'https://uimoe.com/api/v3'
     }
   },
@@ -105,17 +108,17 @@ App({
     })
   },
   get_or_set_hot_query: function () {
+    var that = this;
     var should = true;
     var last_get_hot_query_at = wx.getStorageSync('last_get_hot_query_at');
     if (last_get_hot_query_at) {
-      var ts = new Date().getTime() - last_get_hot_query_at;
-      if (ts < 24 * 60 * 60 * 1000) {
+      if (!that.should_update(new Date(last_get_hot_query_at))) {
         should = false;
       }
     }
 
     if (should) {
-      this.get_hot_query();
+      that.get_hot_query();
     }
   },
   get_hot_query: function () {
@@ -152,17 +155,17 @@ App({
     )
   },
   get_or_set_new_update: function () {
+    var that = this;
     var should = true;
     var last_get_new_update_at = wx.getStorageSync('last_get_new_update_at');
     if (last_get_new_update_at) {
-      var ts = new Date().getTime() - last_get_new_update_at;
-      if (ts < 24 * 60 * 60 * 1000) {
+      if (!that.should_update(new Date(last_get_new_update_at))) {
         should = false;
       }
     }
 
     if (should) {
-      this.get_new_update();
+      that.get_new_update();
     }
   },
   get_new_update: function () {
@@ -199,17 +202,17 @@ App({
     )
   },
   get_or_set_learnning_plan: function () {
+    var that = this;
     var should = true;
     var last_get_learnning_plan_at = wx.getStorageSync('last_get_learnning_plan_at');
     if (last_get_learnning_plan_at) {
-      var ts = new Date().getTime() - last_get_learnning_plan_at;
-      if (ts < 24 * 60 * 60 * 1000) {
+      if (!that.should_update(new Date(last_get_learnning_plan_at))) {
         should = false;
       }
     }
 
     if (should) {
-      this.get_learnning_plan();
+      that.get_learnning_plan();
     }
   },
   get_learnning_plan: function (callback) {
@@ -245,21 +248,23 @@ App({
       }
     )
   },
-  get_or_set_scenes: function () {
+  get_or_set_scenes: function (callback) {
+    var that = this;
     var should = true;
     var last_get_scenes_at = wx.getStorageSync('last_get_scenes_at');
     if (last_get_scenes_at) {
-      var ts = new Date().getTime() - last_get_scenes_at;
-      if (ts < 24 * 60 * 60 * 1000) {
+      if (!that.should_update(new Date(last_get_scenes_at))) {
         should = false;
       }
     }
 
     if (should) {
-      this.get_scenes();
+      that.get_scenes(callback);
+    } else {
+      callback && callback();
     }
   },
-  get_scenes: function () {
+  get_scenes: function (callback) {
     var that = this;
     that.request_with_sk({
       url: that.globalData.api.url,
@@ -287,8 +292,60 @@ App({
           key: 'last_get_scenes_at',
           data: last_get_scenes_at,
         });
+
+        callback && callback();
       }
     )
+  },
+  get_or_set_user_points_rank: function () {
+    var that = this;
+    var should = true;
+    var last_get_user_points_rank_at = wx.getStorageSync('last_get_user_points_rank_at');
+    if (last_get_user_points_rank_at) {
+      if (!that.should_update(new Date(last_get_user_points_rank_at))) {
+        should = false;
+      }
+    }
+
+    if (should) {
+      that.get_user_points_rank();
+    }
+  },
+  get_user_points_rank: function () {
+    var that = this;
+    that.request_with_sk({
+      url: that.globalData.api.url,
+      method: 'GET',
+      data: {
+        code: 'DICT0016',
+        body: JSON.stringify({
+          sk: that.globalData.sk
+        })
+      }
+    },
+      function (res) {
+        console.log(res.data)
+        if (!res.data || !res.data.body || !res.data.body.items || res.data.body.items.length == 0) {
+          return;
+        }
+
+        wx.setStorage({
+          key: 'user_points_rank',
+          data: res.data.body,
+        });
+
+        var last_get_user_points_rank_at = new Date().getTime();
+        wx.setStorage({
+          key: 'last_get_user_points_rank_at',
+          data: last_get_user_points_rank_at,
+        });
+      }
+    )
+  },
+  should_update: function (dt) {
+    var that = this;
+    var dt2 = new Date();
+    return that.format_date(dt2, 'yyyyMMdd') != that.format_date(dt, 'yyyyMMdd');
   },
   format_date: function (dt, format) {
     format = format.replace('yyyy', dt.getFullYear());

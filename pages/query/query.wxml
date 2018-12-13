@@ -2,7 +2,7 @@
   <view style='text-align:center;background-color:#f0f0f0;padding:20rpx;'>
     <view style='background-color:#fff;height:80rpx;line-height:80rpx;text-align:center;width:100%;color:#808080;border-radius:6rpx;'>
       <image src='/images/icon_nav_search_bar.png' style='width:40rpx;vertical-align:middle;' mode='widthFix'></image>
-      <text>{{query_placeholder}}</text>
+      <text style='margin-left:0.4rem;'>{{query_placeholder}}</text>
     </view>
   </view>
 </view>

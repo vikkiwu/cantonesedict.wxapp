@@ -1,29 +1,26 @@
 <view style='position:fixed;left:0;top:0;width:100%;'>
-  <view style='height:40px;line-height:40px;padding:10px;display:flex;z-index:1000;top:0;width:100%;background-color:#22b14c;color:#fff;'>
+  <view class='tab'>
     <navigator open-type='redirect' url='/pages/initials/initials' style='display:block;flex:1;text-align:center;'>声母</navigator>
     <navigator open-type='redirect' url='/pages/finals/finals' style='display:block;flex:1;text-align:center;'>韵母</navigator>
-    <navigator open-type='redirect' url='/pages/tones/tones' style='display:block;flex:1;text-align:center;border-bottom:2px solid #fff;'>声调</navigator>
+    <navigator open-type='redirect' url='/pages/tones/tones' style='display:block;flex:1;text-align:center;border-bottom:2px solid #fff;'>声调({{items.length}})</navigator>
   </view>
-  <view style="background-color:#22b14c;color:#fff;">
-    <view style='padding:10px;line-height:40px;height:40px;'>7,8,9声为入声，搭配韵尾p,t,k</view>
-    <view style='padding:10px;line-height:40px;height:40px;'>实际同1,3,6声，也就是9声6调</view>
+  <view class='tips'>
+    7,8,9声为入声，搭配韵尾p,t,k，实际同1,3,6声，也就是9声6调
   </view>
-  <view style="background-color:#b5e61d;color:#fff;display:flex;padding:10px;line-height:40px;height:40px;border-bottom:1px solid #e7e7e7;">
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>声调</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>例字</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>粤语</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>普通话</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>发音</view>
+  <view class='tablerow tablehead'>
+    <view class='tablecol'>声调</view>
+    <view class='tablecol'>例字</view>
+    <view class='tablecol'>注音</view>
+    <view class='tablecol'>发音</view>
   </view>
 </view>
-<view style='margin-top:240px;'>
-  <view data-canvoice="{{item.canvoice}}" data-canpronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" style="display:flex;margin-bottom:5px;padding:10px;border-bottom:1px solid #e7e7e7;">
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>{{item.chntext}}</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>{{item.cantext}}</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>{{item.canpronounce}}</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>{{item.description}}</view>
-    <view style='display:block;flex:1;text-align:left;padding-left:10px;'>
-      <image style="height:20px;width:20px;" src="/images/voice.png"></image>
+<view style='margin-top:12rem;'>
+  <view data-pronounce="{{item.canpronounce}}" bindtap="play_voice" wx:key="chntext" wx:for="{{items}}" class='tablerow'>
+    <view class='tablecol'>{{item.chntext}}</view>
+    <view class='tablecol'>{{item.cantext}}</view>
+    <view class='tablecol'>{{item.canpronounce}}</view>
+    <view class='tablecol'>
+      <image style="height:40rpx;width:40rpx;" src="{{voice_img}}"></image>
     </view>
   </view>
 </view>
