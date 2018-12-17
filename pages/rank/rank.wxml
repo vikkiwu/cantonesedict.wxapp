@@ -1,23 +1,42 @@
 <!--pages/rank/rank.wxml-->
-<view wx:for="{{items}}" wx:for-index="idx" wx:for-item="item" wx:key="i" style='display:flex;border-bottom:1px solid #ccc;'>
-  <view style='width:3rem;height:4.2rem;line-height:4.2rem;text-align:center;'>{{item.i}}
-  </view>
-  <view style='height:4.2rem;line-height:4.2rem;text-align:center;'>
-    <image src='/images/mine.png' style='width:3rem;' mode='widthFix'></image>
-  </view>
-  <view style='flex:1;'>
-    <view style='height:2rem;line-height:2rem;'>{{item.user_name}}</view>
-    <view style='height:1.2rem;line-height:1.2rem;'>{{item.points}}</view>
+<view style='margin-bottom:4.2rem;'>
+  <view wx:for="{{items}}" wx:for-index="idx" wx:for-item="item" wx:key="i" style='display:flex;border-bottom:1px solid #ccc;'>
+    <view style='width:3rem;height:4.2rem;line-height:4.2rem;text-align:center;'>{{item.i}}
+    </view>
+    <view style='height:4.2rem;line-height:4.2rem;text-align:center;'>
+      <image src='{{item.avatar_url}}' style='width:3rem;border-radius:3rem;' mode='widthFix'></image>
+    </view>
+    <view style='flex:1;'>
+      <view style='height:2rem;line-height:2rem;margin-left:0.4rem;'>{{item.user_name}}</view>
+      <view style='height:1.2rem;line-height:1.2rem;margin-left:0.4rem;'>{{item.points}}积分</view>
+    </view>
   </view>
 </view>
-<view style='position:fixed;bottom:0;border-top:1px solid #ccc;width:100%;display:flex;'>
+<view style='position:fixed;bottom:0;border-top:1px solid #ccc;width:100%;display:flex;background-color:#f0f0f0;'>
   <view style='width:3rem;height:4.2rem;line-height:4.2rem;text-align:center;'>{{me.i}}
   </view>
   <view style='height:4.2rem;line-height:4.2rem;text-align:center;'>
-    <image src='/images/mine.png' style='width:3rem;' mode='widthFix'></image>
+    <image src='{{me.avatar_url}}' style='width:3rem;border-radius:3rem;' mode='widthFix'></image>
   </view>
   <view style='flex:1;'>
-    <view style='height:2rem;line-height:2rem;'>{{me.user_name}}</view>
-    <view style='height:1.2rem;line-height:1.2rem;'>{{me.points}}</view>
+    <view style='height:2rem;line-height:2rem;margin-left:0.4rem;'>{{me.user_name}}
+    </view>
+    <view style='height:1.2rem;line-height:1.2rem;margin-left:0.4rem;'>{{me.points}}积分
+      <text bindtap='open_points_rule_dialog' style='color:#22b14c;margin-left:1rem;'>查看积分获取规则</text>
+    </view>
+  </view>
+</view>
+<view hidden='{{hide_points_rule}}'>
+  <view bindtap='close_points_rule_dialog' style='position:fixed;height:100%;width:100%;background-color:rgba(0,0,0,0.5);left:0;top:0;'></view>
+  <view style='position:fixed;height:26rem;width:680rpx;left:50%;top:50%;margin-top:-13rem;margin-left:-340rpx;border-radius:0.4rem;background-color:#22b14c;color:#fff;'>
+    <view style='line-height:2rem;height:2rem;margin:0 1rem;text-align:center;'>☆排行榜每天更新一次☆</view>
+    <view style='line-height:2rem;height:2rem;margin:0 1rem;'>每日启动，获得1积分</view>
+    <view style='line-height:2rem;height:2rem;margin:0 1rem;'>查询获得1积分，每日最多30积分</view>
+    <view style='line-height:2rem;height:2rem;margin:0 1rem;'>学习获得1积分，每日最多30积分</view>
+    <view style='line-height:2rem;height:2rem;margin:0 1rem;'>复习获得1积分，每日最多30积分</view>
+    <view style='line-height:2rem;height:4rem;margin:0 1rem;'>提交优化建议获得2积分，每日最多20积分</view>
+    <view style='line-height:2rem;height:4rem;margin:0 1rem;'>提交问题反馈获得2积分，每日最多20积分</view>
+    <view style='line-height:2rem;height:6rem;margin:0 1rem;border-bottom:1px dotted #fff;'>若发现恶意刷积分，第一次扣除当天全部积分，第二次扣除用户全部积分且以后无法再获得积分</view>
+    <view style='line-height:2rem;height:2rem;text-align:center;' bindtap='close_points_rule_dialog'>关闭</view>
   </view>
 </view>

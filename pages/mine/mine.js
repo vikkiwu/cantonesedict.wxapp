@@ -34,14 +34,61 @@ Page({
                 userInfo: res.userInfo
               });
               that.get_total_points();
+              that.update_user_info(res.userInfo);
             }
           })
         }
       }
     })
   },
-  get_total_points:function(){
-    var that=this;
+  update_user_info: function (userInfo) {
+    var that = this;
+    var should = true;
+    var last_update_user_info_at = wx.getStorageSync('last_update_user_info_at');
+    if (last_update_user_info_at) {
+      if (!that.should_update(new Date(last_update_user_info_at))) {
+        should = false;
+      }
+    }
+
+    if (!should) {
+      return;
+    }
+    app.request_with_sk({
+      url: app.globalData.api.url,
+      method: 'GET',
+      data: {
+        code: 'DICT0017',
+        body: JSON.stringify({
+          sk: app.globalData.sk,
+          avatar_url: userInfo.avatarUrl,
+          city: userInfo.city,
+          country: userInfo.country,
+          gender: userInfo.gender,
+          language: userInfo.language,
+          nick_name: userInfo.nickName,
+          province: userInfo.province
+        })
+      }
+    },
+      function (res) {
+        console.log(res.data)
+        if (!res.data || !res.data.body || !res.data.body.total_points) {
+          return;
+        }
+
+        that.setData({
+          points: res.data.body.total_points
+        });
+        wx.setStorage({
+          key: 'last_update_user_info_at',
+          data: new Date().getTime()
+        })
+      }
+    )
+  },
+  get_total_points: function () {
+    var that = this;
     app.request_with_sk({
       url: app.globalData.api.url,
       method: 'GET',

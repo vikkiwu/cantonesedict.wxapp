@@ -6,10 +6,22 @@ Page({
    * 页面的初始数据
    */
   data: {
+    hide_points_rule: true,
     me: { i: '-', name: '我', points: 0 },
     items: []
   },
-
+  close_points_rule_dialog: function () {
+    var that = this;
+    that.setData({
+      hide_points_rule: true
+    });
+  },
+  open_points_rule_dialog: function () {
+    var that = this;
+    that.setData({
+      hide_points_rule: false
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -17,11 +29,33 @@ Page({
     wx.setNavigationBarTitle({
       title: '积分排行'
     })
-
+    var that = this;
+    wx.getStorage({
+      key: 'last_show_points_rule',
+      success: function (res) {
+        if (!res.data) {
+          wx.setStorage({
+            key: 'last_show_points_rule',
+            data: new Date().getTime(),
+          });
+          that.setData({
+            hide_points_rule: false
+          })
+        }
+      },
+      fail: function (e) {
+        wx.setStorage({
+          key: 'last_show_points_rule',
+          data: new Date().getTime(),
+        });
+        that.setData({
+          hide_points_rule: false
+        })
+      }
+    })
     wx.showLoading({
       title: '加载中...'
     })
-    var that = this;
     wx.getStorage({
       key: 'user_points_rank',
       success: function (res) {
